@@ -4,21 +4,6 @@ Actions prioritaires avant lancement en production.
 
 ---
 
-## 🔴 BLOQUANT — À faire avant mise en ligne
-
-### 1. Activer Formspree (formulaire de contact)
-**Quoi :** Remplacer `VOTRE_ID_FORMSPREE` dans `index.html` par votre vrai identifiant Formspree.
-**Pourquoi :** Le formulaire est intégré mais n'envoie rien. Zéro lead reçu jusqu'à l'activation.
-**Comment :**
-1. Créer un compte sur [formspree.io](https://formspree.io)
-2. Créer un nouveau formulaire → copier l'ID (ex: `xrgjqpvb`)
-3. Dans `index.html`, remplacer `VOTRE_ID_FORMSPREE` → votre ID
-4. Tester une soumission et vérifier la réception email
-
-**Fichier :** `index.html` ligne ~944 — `action="https://formspree.io/f/VOTRE_ID_FORMSPREE"`
-
----
-
 ### 2. Créer les pages légales (LCEN)
 **Quoi :** Créer `mentions-legales.html` et `confidentialite.html` maintenant. `cgv.html` est **bloqué** jusqu'à réception du SIRET + adresse postale du fondateur (une CGV sans SIRET publiée n'est pas juridiquement valide).
 **Pourquoi :** Obligatoire en France pour tout site de services payants (LCEN art. 6). Liens actuels pointent vers `#`.
