@@ -3,6 +3,42 @@
 Actions prioritaires avant lancement en production.
 
 ---
+✅ Dossier prêt : c:\Users\King\Documents\Projet_Site_Marking_Studio\deploy-ovh\ (882 Ko). Tout ce qui est dedans doit aller dans le www d'OVH — rien d'autre.
+
+## Étape 1 — Envoyer le site avec FileZilla
+Installe FileZilla Client (gratuit) : filezilla-project.org
+En haut de FileZilla, remplis la barre de connexion rapide :
+Hôte : ftp.cluster129.hosting.ovh.net
+Identifiant : markinn
+Mot de passe : (le tien)
+Port : 21
+Clique Connexion rapide
+(S'il propose un certificat TLS, accepte / « OK ».)
+Une fois connecté :
+Panneau de droite = le serveur OVH. Double-clique sur le dossier www pour entrer dedans.
+Panneau de gauche = ton ordinateur. Va dans Documents\Projet_Site_Marking_Studio\deploy-ovh
+Dans le panneau de gauche, sélectionne tout (Ctrl+A) → clic droit → Envoyer (ou glisse-dépose vers la droite).
+Attends que tout soit transféré (quelques secondes, 882 Ko).
+➡️ Vérifie qu'à droite, dans www, tu as bien : index.html, les 2 autres .html, robots.txt, sitemap.xml, et les dossiers css, js, images, assets.
+
+## Étape 2 — Basculer le domaine vers OVH (DNS)
+Domaine chez OVH, donc c'est automatique :
+
+Espace client OVH → Hébergements → ton hébergement → onglet Multisite
+Ajouter un domaine → markingstudio.fr, dossier racine : www → valider
+OVH verra que le DNS pointe encore vers GitHub (185.199.x.x) et proposera de corriger la zone DNS vers ton hébergement (51.91.236.255 / 2001:41d0:301::29). Accepte.
+La propagation DNS prend de quelques minutes à quelques heures. Pendant ce temps, OVH te donne une URL de test temporaire (du type markinn.cluster129.hosting.ovh.net) pour vérifier le site tout de suite.
+
+## Étape 3 — Débrancher GitHub Pages
+Une fois que le site OVH répond bien sur markingstudio.fr :
+
+Sur GitHub : Settings → Pages → Custom domain : efface markingstudio.fr et Save
+Dans la même page, mets Source = None (ou laisse, mais retire au moins le domaine)
+Le fichier CNAME du dépôt ne sert plus à rien — tu peux le supprimer plus tard, ça n'a aucun impact sur OVH.
+⚠️ Important — sécurité
+Tu as partagé ton mot de passe FTP en clair ici. Une fois l'upload terminé, je te recommande de le réinitialiser dans OVH (Hébergements → FTP-SSH → ton utilisateur → modifier le mot de passe). C'est rapide et ça repart sur du propre.
+
+Dis-moi quand l'upload FileZilla est fait (ou si tu bloques à une étape). Si tu préfères, je peux aussi retenter l'envoi automatique dans ~20-30 min, le temps que le bannissement d'IP d'OVH se lève — mais FileZilla sera plus rapide et plus sûr.
 
 ### 2. Créer les pages légales (LCEN)
 **Quoi :** Créer `mentions-legales.html` et `confidentialite.html` maintenant. `cgv.html` est **bloqué** jusqu'à réception du SIRET + adresse postale du fondateur (une CGV sans SIRET publiée n'est pas juridiquement valide).

@@ -1,0 +1,2 @@
+- [Déploiement GitHub Pages](deploiement-github-pages.md) — site servi sur markingstudio.fr via Pages, ne pas toggler le custom domain
+- [Dépôt allégé pour Pages](depot-allege-pour-pages.md) — 720 Mo → 1,4 Mo, ne pas remettre de gros fichiers sources

@@ -9,3 +9,6 @@ package-lock.json
 # Sources de design & brouillons — ne font pas partie du site publié
 Design/
 uploads/
+
+# Dossier de staging pour upload OVH (local seulement)
+deploy-ovh/
