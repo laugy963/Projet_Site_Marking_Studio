@@ -11,7 +11,7 @@ En haut de FileZilla, remplis la barre de connexion rapide :
 Hôte : ftp.cluster129.hosting.ovh.net
 Identifiant : markinn
 Mot de passe : (le tien)
-Port : 21
+Port : 22
 Clique Connexion rapide
 (S'il propose un certificat TLS, accepte / « OK ».)
 Une fois connecté :
@@ -26,19 +26,9 @@ Domaine chez OVH, donc c'est automatique :
 
 Espace client OVH → Hébergements → ton hébergement → onglet Multisite
 Ajouter un domaine → markingstudio.fr, dossier racine : www → valider
-OVH verra que le DNS pointe encore vers GitHub (185.199.x.x) et proposera de corriger la zone DNS vers ton hébergement (51.91.236.255 / 2001:41d0:301::29). Accepte.
+DNS vers ton hébergement (51.91.236.255 / 2001:41d0:301::29). Accepte.
 La propagation DNS prend de quelques minutes à quelques heures. Pendant ce temps, OVH te donne une URL de test temporaire (du type markinn.cluster129.hosting.ovh.net) pour vérifier le site tout de suite.
 
-## Étape 3 — Débrancher GitHub Pages
-Une fois que le site OVH répond bien sur markingstudio.fr :
-
-Sur GitHub : Settings → Pages → Custom domain : efface markingstudio.fr et Save
-Dans la même page, mets Source = None (ou laisse, mais retire au moins le domaine)
-Le fichier CNAME du dépôt ne sert plus à rien — tu peux le supprimer plus tard, ça n'a aucun impact sur OVH.
-⚠️ Important — sécurité
-Tu as partagé ton mot de passe FTP en clair ici. Une fois l'upload terminé, je te recommande de le réinitialiser dans OVH (Hébergements → FTP-SSH → ton utilisateur → modifier le mot de passe). C'est rapide et ça repart sur du propre.
-
-Dis-moi quand l'upload FileZilla est fait (ou si tu bloques à une étape). Si tu préfères, je peux aussi retenter l'envoi automatique dans ~20-30 min, le temps que le bannissement d'IP d'OVH se lève — mais FileZilla sera plus rapide et plus sûr.
 
 ### 2. Créer les pages légales (LCEN)
 **Quoi :** Créer `mentions-legales.html` et `confidentialite.html` maintenant. `cgv.html` est **bloqué** jusqu'à réception du SIRET + adresse postale du fondateur (une CGV sans SIRET publiée n'est pas juridiquement valide).
