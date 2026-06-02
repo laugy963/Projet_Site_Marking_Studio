@@ -1,0 +1,11 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies / outils de build
+node_modules/
+package-lock.json
+
+# Sources de design & brouillons — ne font pas partie du site publié
+Design/
+uploads/
