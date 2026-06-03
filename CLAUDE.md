@@ -43,7 +43,7 @@ Il n'y a aucune étape de build — le dossier racine est le dossier de déploie
 
 ## Schéma JSON-LD
 
-Le `<script type="application/ld+json">` dans `<head>` contient les tarifs des 3 forfaits (Série A 1490€, Série B 3490€, Série C 6990€). Mettre à jour les prix ici en même temps que dans le HTML.
+Le `<script type="application/ld+json">` dans `<head>` contient les tarifs des 3 forfaits (Série A 990€, Série B 2490€, Série C 4990€). Mettre à jour les prix ici en même temps que dans le HTML.
 
 ## SEO
 
