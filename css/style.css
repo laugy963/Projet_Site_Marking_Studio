@@ -614,7 +614,7 @@
 }
 .journey__banner .section__title { color: var(--paper-bright); }
 .journey__banner .section__title .em-italic { color: var(--accent); }
-.journey__banner .section__lead { color: rgba(242, 237, 225, 0.82); }
+.journey__banner .section__lead { color: rgba(242, 237, 225, 0.96); }
 
 /* ==========================================================================
    EXAMPLES / PORTFOLIO PREVIEW
@@ -893,7 +893,7 @@
    ========================================================================== */
 .about {
   background:
-    linear-gradient(rgba(14, 15, 20, 0.52), rgba(14, 15, 20, 0.52)),
+    linear-gradient(rgba(14, 15, 20, 0.74), rgba(14, 15, 20, 0.74)),
     url('../images/about-atelier.webp') center / cover no-repeat;
 }
 .about .section__top .label,
@@ -928,6 +928,7 @@
   letter-spacing: -0.02em;
   font-weight: 500;
   margin-bottom: var(--space-6);
+  text-shadow: 0 1px 12px rgba(14, 15, 20, 0.55);
 }
 .about__story h3 .em-italic { color: var(--accent); }
 .about__story p {
@@ -936,6 +937,7 @@
   line-height: 1.65;
   margin-bottom: var(--space-5);
   max-width: 56ch;
+  text-shadow: 0 1px 8px rgba(14, 15, 20, 0.5);
 }
 .about__story p strong {
   color: var(--paper-bright);
@@ -976,7 +978,7 @@
   font-size: 0.75rem;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: rgba(242, 237, 225, 0.7);
   margin-top: 4px;
 }
 
