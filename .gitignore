@@ -12,3 +12,4 @@ uploads/
 
 # Dossier de staging pour upload OVH (local seulement)
 deploy-ovh/
+.gstack/

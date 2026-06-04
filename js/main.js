@@ -13,6 +13,50 @@
      per-section via [data-section="verso"], not a global theme. */
   document.documentElement.setAttribute('data-theme', 'light');
 
+  /* ===== INTRO OVERLAY — "le site se construit" =====
+     The <head> script adds html.intro-active before first paint (once per
+     session, never under reduced-motion). Here we lock scroll, wire up skip
+     gestures, and tear the overlay down when the choreography ends. */
+  (function initIntro() {
+    const root = document.documentElement;
+    if (!root.classList.contains('intro-active')) return;
+    const overlay = document.querySelector('.build-intro');
+    if (!overlay) { root.classList.remove('intro-active'); return; }
+
+    try { sessionStorage.setItem('ms-intro-seen', '1'); } catch (e) {}
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    let finished = false;
+    const skipEvents = ['wheel', 'touchmove', 'keydown'];
+
+    function onSkip() { finish(); }
+
+    function unbind() {
+      skipEvents.forEach((ev) => window.removeEventListener(ev, onSkip));
+      overlay.removeEventListener('click', onSkip);
+    }
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+      unbind();
+      overlay.classList.add('is-out');
+      const cleanup = () => {
+        overlay.removeEventListener('transitionend', cleanup);
+        root.classList.remove('intro-active');
+        document.body.style.overflow = prevOverflow;
+      };
+      overlay.addEventListener('transitionend', cleanup);
+      setTimeout(cleanup, 700); // fallback if transitionend never fires
+    }
+
+    skipEvents.forEach((ev) => window.addEventListener(ev, onSkip, { passive: true }));
+    overlay.addEventListener('click', onSkip);
+    setTimeout(finish, 1700); // end of the build choreography
+  })();
+
   /* ===== HEADER SCROLL ===== */
   const header = document.getElementById('header');
   if (header) {
@@ -62,6 +106,61 @@
     reveals.forEach((el) => observer.observe(el));
   } else {
     reveals.forEach((el) => el.classList.add('is-visible'));
+  }
+
+  /* ===== MARKER HIGHLIGHTS ===== */
+  const marks = document.querySelectorAll('.mark-hl');
+  if (marks.length && 'IntersectionObserver' in window) {
+    const markObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-marked');
+            markObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+    marks.forEach((m) => markObserver.observe(m));
+  } else {
+    marks.forEach((m) => m.classList.add('is-marked'));
+  }
+
+  /* ===== BEFORE/AFTER COMPARE SLIDER =====
+     The invisible native range drives --pos (pointer, touch and keyboard). */
+  document.querySelectorAll('.compare').forEach((compare) => {
+    const range = compare.querySelector('.compare__range');
+    if (!range) return;
+    const setPos = (v) => compare.style.setProperty('--pos', v + '%');
+    range.addEventListener('input', () => setPos(range.value));
+    setPos(range.value);
+  });
+
+  /* ===== JOURNEY — cinematic timeline =====
+     As each step crosses the viewport middle it becomes active and the sticky
+     device advances through its build stages (wireframe → design → dev → live). */
+  const journeyExp = document.querySelector('.journey__experience');
+  const journeySteps = document.querySelectorAll('.journey-step[data-step]');
+  const journeyDevice = document.querySelector('.journey__device');
+  if (journeyExp && journeySteps.length && journeyDevice && 'IntersectionObserver' in window) {
+    journeyExp.classList.add('is-cinematic');
+    let activeStep = null;
+    const setActive = (step) => {
+      if (step === activeStep) return;
+      if (activeStep) activeStep.classList.remove('is-active');
+      step.classList.add('is-active');
+      activeStep = step;
+      journeyDevice.dataset.stage = step.dataset.step;
+    };
+    setActive(journeySteps[0]);
+    const stepObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target); });
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+    );
+    journeySteps.forEach((s) => stepObs.observe(s));
   }
 
   /* ===== FORM HANDLING ===== */
@@ -170,6 +269,31 @@
       field.addEventListener('input', () => clearFieldError(field));
       field.addEventListener('change', () => clearFieldError(field));
     });
+
+    /* ----- Brief progress — "fiche projet" engagement bar ----- */
+    const briefProgress = document.getElementById('briefProgress');
+    if (briefProgress) {
+      const pctLabel = briefProgress.querySelector('.brief__pct');
+      const requiredFields = Array.from(form.querySelectorAll('[required]'));
+      const isFilled = (f) => (f.type === 'checkbox' ? f.checked : f.value.trim() !== '');
+      const updateBrief = () => {
+        const filled = requiredFields.filter(isFilled).length;
+        const pct = requiredFields.length ? Math.round((filled / requiredFields.length) * 100) : 0;
+        briefProgress.style.setProperty('--progress', pct + '%');
+        const complete = pct === 100;
+        briefProgress.classList.toggle('is-complete', complete);
+        if (pctLabel) {
+          pctLabel.textContent = complete
+            ? 'Votre projet est prêt à être étudié.'
+            : 'Brief complété à ' + pct + ' %';
+        }
+      };
+      form.querySelectorAll('input, select, textarea').forEach((f) => {
+        f.addEventListener('input', updateBrief);
+        f.addEventListener('change', updateBrief);
+      });
+      updateBrief();
+    }
   }
 
   /* ===== SMOOTH SCROLL FOR ANCHORS ===== */

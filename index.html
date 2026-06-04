@@ -54,8 +54,43 @@
   }
 }
 </script>
+
+<!-- Intro overlay flag — set before first paint to avoid FOUC.
+     Shows the "build" intro once per session, never under reduced-motion. -->
+<script>
+  (function () {
+    try {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && !sessionStorage.getItem('ms-intro-seen')) {
+        document.documentElement.classList.add('intro-active');
+      }
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
+
+<!-- ==========================================================================
+     INTRO OVERLAY  ·  "le site se construit"
+     Only rendered when <html> has .intro-active (set by the head script).
+     ========================================================================== -->
+<div class="build-intro" aria-hidden="true">
+  <div class="build-intro__stage">
+    <svg class="build-intro__frame" viewBox="0 0 320 220" fill="none" aria-hidden="true">
+      <rect class="build-intro__frame-rect" x="2" y="2" width="316" height="216" rx="8"/>
+      <line class="build-intro__frame-bar" x1="2" y1="34" x2="318" y2="34"/>
+    </svg>
+    <span class="build-intro__dot" style="--i:0"></span>
+    <span class="build-intro__dot" style="--i:1"></span>
+    <span class="build-intro__dot" style="--i:2"></span>
+    <div class="build-intro__grid" aria-hidden="true"></div>
+    <span class="build-intro__block build-intro__block--a" style="--i:0"></span>
+    <span class="build-intro__block build-intro__block--b" style="--i:1"></span>
+    <span class="build-intro__block build-intro__block--c" style="--i:2"></span>
+    <span class="build-intro__block build-intro__block--d" style="--i:3"></span>
+    <p class="build-intro__title">Un seul projet <span class="em-italic">à&nbsp;la&nbsp;fois.</span></p>
+  </div>
+</div>
 
 <a href="#hero" class="skip-link">Aller au contenu principal</a>
 
@@ -75,6 +110,7 @@
       <ul class="nav__list" role="list">
         <li><a href="#pain">Le constat</a></li>
         <li><a href="#answer">Méthode</a></li>
+        <li><a href="#refonte">Refonte</a></li>
         <li><a href="#journey">Processus</a></li>
         <li><a href="#examples">Réalisations</a></li>
         <li><a href="#pricing">Tarifs</a></li>
@@ -98,6 +134,7 @@
     <ul role="list">
       <li><a href="#pain">Le constat</a></li>
       <li><a href="#answer">Méthode</a></li>
+      <li><a href="#refonte">Refonte</a></li>
       <li><a href="#journey">Processus</a></li>
       <li><a href="#examples">Réalisations</a></li>
       <li><a href="#pricing">Tarifs</a></li>
@@ -114,6 +151,11 @@
      ========================================================================== -->
 <section class="hero" id="hero">
   <div class="container hero__inner">
+
+    <div class="hero__stamp" aria-hidden="true">
+      <span class="hero__stamp-edition">Édition 01 / 04</span>
+      <span class="hero__stamp-status">Projet disponible · 2026</span>
+    </div>
 
     <div class="hero__strap reveal">
       <span class="label">MARKING
@@ -273,7 +315,7 @@ STUDIO</span>
       <div class="answer__col-left reveal">
         <span class="label label--ink">Marking — Studio</span>
         <h2 class="answer__quote">
-          Un site qui <span class="em-italic">parle</span> à vos clients,
+          Un site qui <span class="em-italic">parle</span> à vos <span class="mark-hl">clients</span>,
           se charge en moins de deux secondes,
           et reste <span class="em-italic">en mémoire</span> longtemps après la visite.
         </h2>
@@ -333,7 +375,85 @@ STUDIO</span>
 </section>
 
 <!-- ==========================================================================
-     JOURNEY  ·  N° 04
+     REFONTE  ·  N° 04 — avant / après
+     ========================================================================== -->
+<section class="refonte section" id="refonte">
+  <div class="container">
+
+    <div class="section__top reveal">
+      <div class="section__top-left">
+        <span class="pilcrow" aria-hidden="true"><svg class="fleur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="currentColor" aria-hidden="true"><path d="M50 4 C 47 10 44 18 43 28 C 42 36 42 46 44 56 L 44 62 C 38 56 30 50 22 50 C 14 50 8 56 10 66 C 12 76 22 82 32 80 C 38 78 42 74 44 68 L 44 72 L 28 72 L 28 78 L 44 78 L 44 84 C 40 86 34 90 30 96 C 26 104 28 112 34 112 C 40 112 44 106 46 98 L 46 122 L 50 128 L 54 122 L 54 98 C 56 106 60 112 66 112 C 72 112 74 104 70 96 C 66 90 60 86 56 84 L 56 78 L 72 78 L 72 72 L 56 72 L 56 68 C 58 74 62 78 68 80 C 78 82 88 76 90 66 C 92 56 86 50 78 50 C 70 50 62 56 56 62 L 56 56 C 58 46 58 36 57 28 C 56 18 53 10 50 4 Z"/></svg></span>
+        <span class="label">Avant — Après</span>
+      </div>
+      <span class="folio">N°04 / Série A</span>
+    </div>
+
+    <h2 class="section__title reveal">
+      La refonte,<br>
+      <span class="em-italic">glissez pour voir.</span>
+    </h2>
+    <p class="section__lead reveal">
+      Un même site, deux perceptions. Tirez la poignée pour passer de l'existant
+      daté à la version Marking Studio.
+    </p>
+
+    <div class="compare reveal" style="--pos:50%; margin-top: clamp(2.5rem, 5vh, 4rem);">
+
+      <!-- APRÈS — base layer (Marking) -->
+      <div class="compare__pane compare__pane--after">
+        <div class="mk mk--new">
+          <div class="mk--new__bar">
+            <span class="mk--new__dot"></span><span class="mk--new__dot"></span><span class="mk--new__dot"></span>
+            <span class="mk--new__url">markingstudio.fr</span>
+          </div>
+          <div class="mk--new__body">
+            <span class="mk--new__eyebrow">Marking — Studio</span>
+            <p class="mk--new__title">Un site qui <i>marque.</i></p>
+            <div class="mk--new__lines"><span></span><span></span><span></span></div>
+            <div class="mk--new__footer">
+              <span class="mk--new__cta">Démarrer un projet</span>
+              <span class="mk--new__fleur"><svg class="fleur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="currentColor" aria-hidden="true"><path d="M50 4 C 47 10 44 18 43 28 C 42 36 42 46 44 56 L 44 62 C 38 56 30 50 22 50 C 14 50 8 56 10 66 C 12 76 22 82 32 80 C 38 78 42 74 44 68 L 44 72 L 28 72 L 28 78 L 44 78 L 44 84 C 40 86 34 90 30 96 C 26 104 28 112 34 112 C 40 112 44 106 46 98 L 46 122 L 50 128 L 54 122 L 54 98 C 56 106 60 112 66 112 C 72 112 74 104 70 96 C 66 90 60 86 56 84 L 56 78 L 72 78 L 72 72 L 56 72 L 56 68 C 58 74 62 78 68 80 C 78 82 88 76 90 66 C 92 56 86 50 78 50 C 70 50 62 56 56 62 L 56 56 C 58 46 58 36 57 28 C 56 18 53 10 50 4 Z"/></svg></span>
+            </div>
+          </div>
+        </div>
+        <span class="compare__tag compare__tag--after">Après</span>
+      </div>
+
+      <!-- AVANT — clipped layer on top (vieux site) -->
+      <div class="compare__pane compare__pane--before">
+        <div class="mk mk--old">
+          <div class="mk--old__bar">www.mon-site.fr/accueil.html</div>
+          <div class="mk--old__body">
+            <h3 class="mk--old__title">BIENVENUE SUR NOTRE SITE</h3>
+            <p class="mk--old__sub">Cliquez ici pour découvrir tous nos services !!!</p>
+            <div class="mk--old__row">
+              <span class="mk--old__box"></span>
+              <span class="mk--old__box"></span>
+              <span class="mk--old__box"></span>
+            </div>
+            <span class="mk--old__btn">CONTACTEZ NOUS</span>
+          </div>
+        </div>
+        <span class="compare__tag compare__tag--before">Avant</span>
+      </div>
+
+      <div class="compare__divider" aria-hidden="true">
+        <span class="compare__handle"><span class="compare__handle-arrows">↔</span></span>
+      </div>
+
+      <input type="range" class="compare__range" min="0" max="100" value="50"
+             aria-label="Comparer l'avant et l'après de la refonte">
+    </div>
+
+    <p class="refonte__line reveal">
+      On ne change pas seulement l'apparence. On <span class="em-italic">reconstruit la perception.</span>
+    </p>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     JOURNEY  ·  N° 05
      ========================================================================== -->
 <section class="journey section" id="journey">
   <div class="container">
@@ -343,7 +463,7 @@ STUDIO</span>
         <span class="pilcrow" aria-hidden="true"><svg class="fleur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="currentColor" aria-hidden="true"><path d="M50 4 C 47 10 44 18 43 28 C 42 36 42 46 44 56 L 44 62 C 38 56 30 50 22 50 C 14 50 8 56 10 66 C 12 76 22 82 32 80 C 38 78 42 74 44 68 L 44 72 L 28 72 L 28 78 L 44 78 L 44 84 C 40 86 34 90 30 96 C 26 104 28 112 34 112 C 40 112 44 106 46 98 L 46 122 L 50 128 L 54 122 L 54 98 C 56 106 60 112 66 112 C 72 112 74 104 70 96 C 66 90 60 86 56 84 L 56 78 L 72 78 L 72 72 L 56 72 L 56 68 C 58 74 62 78 68 80 C 78 82 88 76 90 66 C 92 56 86 50 78 50 C 70 50 62 56 56 62 L 56 56 C 58 46 58 36 57 28 C 56 18 53 10 50 4 Z"/></svg></span>
         <span class="label">Comment on travaille</span>
       </div>
-      <span class="folio">N°04 / Série A</span>
+      <span class="folio">N°05 / Série A</span>
     </div>
 
     <div class="journey__banner reveal">
@@ -358,8 +478,9 @@ STUDIO</span>
       </p>
     </div>
 
-    <ol class="journey__grid" role="list" style="margin-top: clamp(3rem, 6vh, 4.5rem);">
-      <li class="journey-step reveal">
+    <div class="journey__experience">
+    <ol class="journey__steps" role="list">
+      <li class="journey-step" data-step="1">
         <div class="journey-step__head">
           <span class="journey-step__num"><i>i.</i></span>
           <span class="journey-step__duration">2–3 jours</span>
@@ -376,7 +497,7 @@ STUDIO</span>
         </ul>
       </li>
 
-      <li class="journey-step reveal">
+      <li class="journey-step" data-step="2">
         <div class="journey-step__head">
           <span class="journey-step__num"><i>ii.</i></span>
           <span class="journey-step__duration">1–2 semaines</span>
@@ -393,7 +514,7 @@ STUDIO</span>
         </ul>
       </li>
 
-      <li class="journey-step reveal">
+      <li class="journey-step" data-step="3">
         <div class="journey-step__head">
           <span class="journey-step__num"><i>iii.</i></span>
           <span class="journey-step__duration">2–4 semaines</span>
@@ -410,7 +531,7 @@ STUDIO</span>
         </ul>
       </li>
 
-      <li class="journey-step reveal">
+      <li class="journey-step" data-step="4">
         <div class="journey-step__head">
           <span class="journey-step__num"><i>iv.</i></span>
           <span class="journey-step__duration">Suivi continu</span>
@@ -428,11 +549,34 @@ STUDIO</span>
       </li>
     </ol>
 
+      <aside class="journey__viz" aria-hidden="true">
+        <div class="journey__device" data-stage="1">
+          <div class="dev__bar">
+            <span class="dev__dot"></span><span class="dev__dot"></span><span class="dev__dot"></span>
+            <span class="dev__url"></span>
+          </div>
+          <div class="dev__screen">
+            <span class="dev__block dev__block--head"></span>
+            <span class="dev__block dev__block--hero"></span>
+            <div class="dev__cols">
+              <span class="dev__block dev__block--col"></span>
+              <span class="dev__block dev__block--col"></span>
+              <span class="dev__block dev__block--col"></span>
+            </div>
+            <span class="dev__block dev__block--foot"></span>
+            <span class="dev__live">● En ligne</span>
+          </div>
+          <span class="dev__caption"></span>
+        </div>
+      </aside>
+
+    </div>
+
   </div>
 </section>
 
 <!-- ==========================================================================
-     EXAMPLES  ·  N° 05
+     EXAMPLES  ·  N° 06
      ========================================================================== -->
 <section class="examples section" id="examples">
   <div class="container">
@@ -442,7 +586,7 @@ STUDIO</span>
         <span class="pilcrow" aria-hidden="true"><svg class="fleur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="currentColor" aria-hidden="true"><path d="M50 4 C 47 10 44 18 43 28 C 42 36 42 46 44 56 L 44 62 C 38 56 30 50 22 50 C 14 50 8 56 10 66 C 12 76 22 82 32 80 C 38 78 42 74 44 68 L 44 72 L 28 72 L 28 78 L 44 78 L 44 84 C 40 86 34 90 30 96 C 26 104 28 112 34 112 C 40 112 44 106 46 98 L 46 122 L 50 128 L 54 122 L 54 98 C 56 106 60 112 66 112 C 72 112 74 104 70 96 C 66 90 60 86 56 84 L 56 78 L 72 78 L 72 72 L 56 72 L 56 68 C 58 74 62 78 68 80 C 78 82 88 76 90 66 C 92 56 86 50 78 50 C 70 50 62 56 56 62 L 56 56 C 58 46 58 36 57 28 C 56 18 53 10 50 4 Z"/></svg></span>
         <span class="label">Sélection de travaux</span>
       </div>
-      <span class="folio">N°05 / Série A</span>
+      <span class="folio">N°06 / Série A</span>
     </div>
 
     <h2 class="section__title reveal">
@@ -451,7 +595,7 @@ STUDIO</span>
     </h2>
     <p class="section__lead reveal">
       Nous prenons un nombre restreint de clients par trimestre pour garantir
-      la qualité d'exécution. Ces visuels illustrent notre approche créative.
+      la <span class="mark-hl">qualité</span> d'exécution. Ces visuels illustrent notre approche créative.
     </p>
 
     <div class="examples__grid" style="margin-top: clamp(3rem, 6vh, 4.5rem);">
@@ -515,7 +659,7 @@ STUDIO</span>
 </section>
 
 <!-- ==========================================================================
-     PRICING  ·  N° 06
+     PRICING  ·  N° 07
      ========================================================================== -->
 <section class="pricing section" id="pricing">
   <div class="container">
@@ -525,7 +669,7 @@ STUDIO</span>
         <span class="pilcrow" aria-hidden="true"><svg class="fleur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="currentColor" aria-hidden="true"><path d="M50 4 C 47 10 44 18 43 28 C 42 36 42 46 44 56 L 44 62 C 38 56 30 50 22 50 C 14 50 8 56 10 66 C 12 76 22 82 32 80 C 38 78 42 74 44 68 L 44 72 L 28 72 L 28 78 L 44 78 L 44 84 C 40 86 34 90 30 96 C 26 104 28 112 34 112 C 40 112 44 106 46 98 L 46 122 L 50 128 L 54 122 L 54 98 C 56 106 60 112 66 112 C 72 112 74 104 70 96 C 66 90 60 86 56 84 L 56 78 L 72 78 L 72 72 L 56 72 L 56 68 C 58 74 62 78 68 80 C 78 82 88 76 90 66 C 92 56 86 50 78 50 C 70 50 62 56 56 62 L 56 56 C 58 46 58 36 57 28 C 56 18 53 10 50 4 Z"/></svg></span>
         <span class="label">Tarifs de base</span>
       </div>
-      <span class="folio">N°06 / Série A</span>
+      <span class="folio">N°07 / Série A</span>
     </div>
 
     <h2 class="section__title reveal">
@@ -643,7 +787,7 @@ STUDIO</span>
 </section>
 
 <!-- ==========================================================================
-     ABOUT + TESTIMONIALS  ·  N° 07
+     ABOUT + TESTIMONIALS  ·  N° 08
      ========================================================================== -->
 <section class="about section" id="about">
   <div class="container">
@@ -653,7 +797,7 @@ STUDIO</span>
         <span class="pilcrow" aria-hidden="true"><svg class="fleur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="currentColor" aria-hidden="true"><path d="M50 4 C 47 10 44 18 43 28 C 42 36 42 46 44 56 L 44 62 C 38 56 30 50 22 50 C 14 50 8 56 10 66 C 12 76 22 82 32 80 C 38 78 42 74 44 68 L 44 72 L 28 72 L 28 78 L 44 78 L 44 84 C 40 86 34 90 30 96 C 26 104 28 112 34 112 C 40 112 44 106 46 98 L 46 122 L 50 128 L 54 122 L 54 98 C 56 106 60 112 66 112 C 72 112 74 104 70 96 C 66 90 60 86 56 84 L 56 78 L 72 78 L 72 72 L 56 72 L 56 68 C 58 74 62 78 68 80 C 78 82 88 76 90 66 C 92 56 86 50 78 50 C 70 50 62 56 56 62 L 56 56 C 58 46 58 36 57 28 C 56 18 53 10 50 4 Z"/></svg></span>
         <span class="label">À propos</span>
       </div>
-      <span class="folio">N°07 / Série A</span>
+      <span class="folio">N°08 / Série A</span>
     </div>
 
     <div class="about__layout">
@@ -715,7 +859,7 @@ STUDIO</span>
 </section>
 
 <!-- ==========================================================================
-     FAQ  ·  N° 08
+     FAQ  ·  N° 09
      ========================================================================== -->
 <section class="faq section" id="faq">
   <div class="container">
@@ -725,7 +869,7 @@ STUDIO</span>
         <span class="pilcrow" aria-hidden="true"><svg class="fleur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="currentColor" aria-hidden="true"><path d="M50 4 C 47 10 44 18 43 28 C 42 36 42 46 44 56 L 44 62 C 38 56 30 50 22 50 C 14 50 8 56 10 66 C 12 76 22 82 32 80 C 38 78 42 74 44 68 L 44 72 L 28 72 L 28 78 L 44 78 L 44 84 C 40 86 34 90 30 96 C 26 104 28 112 34 112 C 40 112 44 106 46 98 L 46 122 L 50 128 L 54 122 L 54 98 C 56 106 60 112 66 112 C 72 112 74 104 70 96 C 66 90 60 86 56 84 L 56 78 L 72 78 L 72 72 L 56 72 L 56 68 C 58 74 62 78 68 80 C 78 82 88 76 90 66 C 92 56 86 50 78 50 C 70 50 62 56 56 62 L 56 56 C 58 46 58 36 57 28 C 56 18 53 10 50 4 Z"/></svg></span>
         <span class="label">Questions fréquentes</span>
       </div>
-      <span class="folio">N°08 / Série A</span>
+      <span class="folio">N°09 / Série A</span>
     </div>
 
     <div class="faq__layout">
@@ -835,7 +979,7 @@ STUDIO</span>
 </section>
 
 <!-- ==========================================================================
-     CONTACT  ·  N° 09 — verso
+     CONTACT  ·  N° 10 — verso
      ========================================================================== -->
 <section class="contact section" id="contact" data-section="verso">
   <div class="container">
@@ -845,7 +989,7 @@ STUDIO</span>
         <span class="pilcrow" aria-hidden="true"><svg class="fleur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="currentColor" aria-hidden="true"><path d="M50 4 C 47 10 44 18 43 28 C 42 36 42 46 44 56 L 44 62 C 38 56 30 50 22 50 C 14 50 8 56 10 66 C 12 76 22 82 32 80 C 38 78 42 74 44 68 L 44 72 L 28 72 L 28 78 L 44 78 L 44 84 C 40 86 34 90 30 96 C 26 104 28 112 34 112 C 40 112 44 106 46 98 L 46 122 L 50 128 L 54 122 L 54 98 C 56 106 60 112 66 112 C 72 112 74 104 70 96 C 66 90 60 86 56 84 L 56 78 L 72 78 L 72 72 L 56 72 L 56 68 C 58 74 62 78 68 80 C 78 82 88 76 90 66 C 92 56 86 50 78 50 C 70 50 62 56 56 62 L 56 56 C 58 46 58 36 57 28 C 56 18 53 10 50 4 Z"/></svg></span>
         <span class="label">Démarrer un projet</span>
       </div>
-      <span class="folio">N°09 / Série A</span>
+      <span class="folio">N°10 / Série A</span>
     </div>
 
     <div class="contact__layout">
@@ -892,6 +1036,15 @@ STUDIO</span>
       </div>
 
       <form class="contact__form reveal" id="contactForm" action="https://formspree.io/f/mnjregja" method="POST" novalidate>
+        <div class="brief__head">
+          <span class="label">Fiche projet — Marking Studio</span>
+          <span class="folio">Brief N°—</span>
+        </div>
+        <div class="brief__progress" id="briefProgress" style="--progress: 0%">
+          <div class="brief__track"><div class="brief__bar"></div></div>
+          <span class="brief__pct">Brief complété à 0 %</span>
+        </div>
+
         <div class="form-row">
           <div class="form-group">
             <label for="name">Nom complet *</label>
