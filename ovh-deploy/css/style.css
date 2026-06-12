@@ -26,7 +26,7 @@
   transition: transform var(--t-fast), background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
 }
 .btn:hover { transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
+.btn:active { transform: translateY(0) scale(0.985); }
 
 .btn--primary { --btn-bg: var(--ink); --btn-fg: var(--paper); --btn-bd: var(--ink); }
 .btn--primary:hover { --btn-bg: var(--accent); --btn-bd: var(--accent); }
@@ -115,6 +115,9 @@
 }
 .nav__list a:hover { opacity: 1; }
 .nav__list a:hover::after { width: 100%; left: 0; }
+/* Current section — set by the scrollspy in main.js */
+.nav__list a.is-active { opacity: 1; }
+.nav__list a.is-active::after { width: 100%; left: 0; }
 
 .header__actions { display: flex; align-items: center; gap: var(--space-4); }
 
@@ -272,6 +275,7 @@
   font-weight: 500;
   color: var(--text);
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 .stat__value .em-italic { color: var(--accent); font-style: italic; }
 .stat__label {
@@ -314,6 +318,17 @@
 .hero__strap { border-bottom-color: rgba(242, 237, 225, 0.18); }
 .hero__strap .label,
 .hero__strap .folio { color: #F8F4EA; }
+
+/* Ghost CTA sits on the dark hero photo — needs light ink, not page ink */
+.hero .btn--ghost {
+  --btn-fg: var(--paper-bright);
+  --btn-bd: rgba(242, 237, 225, 0.5);
+}
+.hero .btn--ghost:hover {
+  --btn-bg: var(--paper-bright);
+  --btn-fg: var(--ink);
+  --btn-bd: var(--paper-bright);
+}
 
 @media (max-width: 720px) {
   .hero__stats { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
@@ -670,46 +685,7 @@
   overflow: hidden;
 }
 
-/* Browser mockup inside each example card */
-.mock {
-  width: 86%;
-  background: var(--paper-bright);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-md);
-  box-shadow: 0 18px 40px -20px rgba(20,21,26,0.25);
-  transform: rotate(-1.5deg);
-  transition: transform var(--t-slow);
-}
-.example-card:hover .mock { transform: rotate(0) translateY(-4px); }
-.mock__chrome {
-  display: flex; gap: 5px;
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--rule);
-}
-.mock__chrome span {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--rule);
-}
-.mock__chrome span:first-child { background: var(--accent); opacity: 0.4; }
-.mock__body { padding: var(--space-4); display: flex; flex-direction: column; gap: 6px; }
-.mock__bar {
-  height: 6px; border-radius: 2px;
-  background: var(--rule);
-}
-.mock__bar--accent { background: var(--accent); opacity: 0.7; width: 30%; }
-.mock__bar--h {
-  height: 14px;
-  background: linear-gradient(to right, var(--ink) 60%, transparent 60%);
-  margin-bottom: 6px;
-}
-.mock__grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 6px; margin-top: 4px;
-}
-.mock__grid div { aspect-ratio: 1; background: var(--rule); border-radius: 2px; }
-.mock__grid div:nth-child(2) { background: var(--accent); opacity: 0.5; }
-
-/* Real project screenshots replacing CSS mocks */
+/* Real project screenshots fill each example card */
 .example-card__img {
   position: absolute;
   inset: 0;
@@ -818,7 +794,9 @@
   font-size: 0.95rem;
   color: var(--text-muted);
   line-height: 1.45;
-  min-height: 3em;
+  /* Reserve room for the longest blurb so the price + feature lists
+     start at the same Y across all three cards */
+  min-height: 4.5em;
 }
 
 .price-card__price {
@@ -840,6 +818,7 @@
   line-height: 1;
   font-weight: 500;
   letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
 }
 .price-card__currency {
   font-family: var(--font-display);
@@ -1331,6 +1310,19 @@
 }
 
 /* ==========================================================================
+   LAYOUT UTILITIES — relocated from inline styles
+   ========================================================================== */
+.journey__grid,
+.examples__grid,
+.pricing__grid { margin-top: clamp(3rem, 6vh, 4.5rem); }
+
+.pricing__cta { text-align: center; margin-top: clamp(2rem, 4vh, 3rem); }
+
+.inline-cta { margin-top: clamp(1.5rem, 3vh, 2rem); }
+
+.faq__intro .section__title { max-width: 14ch; }
+
+/* ==========================================================================
    RESPONSIVE — comprehensive mobile/tablet pass
    ========================================================================== */
 
@@ -1668,56 +1660,6 @@ html.intro-active:not(.js) .build-intro {
 @keyframes intro-fade   { to { opacity: 1; } }
 @keyframes intro-place  { to { opacity: 1; transform: translateY(0) scale(1); } }
 @keyframes intro-fade-up{ to { opacity: 1; transform: translateY(0); } }
-
-/* ==========================================================================
-   HERO STAMP — "édition limitée" ink mark
-   ========================================================================== */
-.hero__stamp {
-  position: absolute;
-  top: clamp(5.5rem, 15vh, 8.5rem);
-  right: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 0.6em 0.9em;
-  border: 1.5px solid var(--accent);
-  border-radius: var(--radius-sm);
-  color: var(--accent);
-  text-align: center;
-  background: rgba(14, 15, 20, 0.18);
-  box-shadow: inset 0 0 0 3px rgba(216, 96, 79, 0.12);
-  opacity: 0.92;
-  transform: rotate(-4deg);
-  animation: stamp-press 640ms var(--ease) 520ms backwards;
-}
-.hero__stamp-edition {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.hero__stamp-status {
-  font-family: var(--font-body);
-  font-size: 0.56rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(216, 96, 79, 0.85);
-}
-@keyframes stamp-press {
-  from { opacity: 0; transform: rotate(-13deg) scale(1.35); filter: blur(5px); }
-  55%  { filter: blur(0); }
-  to   { opacity: 0.92; transform: rotate(-4deg) scale(1); filter: blur(0); }
-}
-@media (max-width: 720px) {
-  .hero__stamp { top: 4.75rem; padding: 0.5em 0.7em; transform: rotate(-4deg) scale(0.85); transform-origin: top right; }
-}
-@media (max-width: 420px) {
-  .hero__stamp { display: none; }
-}
 
 /* ==========================================================================
    REFONTE — before / after comparison slider
@@ -2059,19 +2001,19 @@ html.intro-active:not(.js) .build-intro {
   color: var(--text-muted);
   border-top: 1px solid var(--rule);
 }
-.dev__caption::after { content: '01 — Découverte'; }
+.dev__caption::after { content: '01 · Découverte'; }
 
 /* --- Stage 1 · wireframe (Découverte) --- */
 .journey__device[data-stage="1"] .dev__block { background: transparent; border: 1.5px dashed var(--rule); }
 .journey__device[data-stage="1"] .dev__url::after { content: 'esquisse.txt'; }
-.journey__device[data-stage="1"] .dev__caption::after { content: '01 — Découverte'; }
+.journey__device[data-stage="1"] .dev__caption::after { content: '01 · Découverte'; }
 
 /* --- Stage 2 · design (maquette colorée) --- */
 .journey__device[data-stage="2"] .dev__block { background: var(--paper-deep); border: 1px solid transparent; }
 .journey__device[data-stage="2"] .dev__block--head { background: var(--accent); }
 .journey__device[data-stage="2"] .dev__block--hero { background: var(--ink); }
 .journey__device[data-stage="2"] .dev__url::after { content: 'maquette.fig'; }
-.journey__device[data-stage="2"] .dev__caption::after { content: '02 — Design'; }
+.journey__device[data-stage="2"] .dev__caption::after { content: '02 · Design'; }
 
 /* --- Stage 3 · développement (codé + grille) --- */
 .journey__device[data-stage="3"] .dev__block { background: var(--paper-deep); border: 1px solid transparent; }
@@ -2085,7 +2027,7 @@ html.intro-active:not(.js) .build-intro {
 }
 .journey__device[data-stage="3"] .dev__dot:nth-child(2) { background: var(--accent); opacity: 0.35; }
 .journey__device[data-stage="3"] .dev__url::after { content: 'localhost:8080'; }
-.journey__device[data-stage="3"] .dev__caption::after { content: '03 — Développement'; }
+.journey__device[data-stage="3"] .dev__caption::after { content: '03 · Développement'; }
 
 /* --- Stage 4 · mise en ligne (live) --- */
 .journey__device[data-stage="4"] .dev__block { background: var(--paper-deep); border: 1px solid transparent; }
@@ -2093,7 +2035,7 @@ html.intro-active:not(.js) .build-intro {
 .journey__device[data-stage="4"] .dev__block--hero { background: var(--ink); }
 .journey__device[data-stage="4"] .dev__live { opacity: 1; transform: translateY(0); }
 .journey__device[data-stage="4"] .dev__url::after { content: 'markingstudio.fr'; }
-.journey__device[data-stage="4"] .dev__caption::after { content: '04 — Mise en ligne'; }
+.journey__device[data-stage="4"] .dev__caption::after { content: '04 · Mise en ligne'; }
 
 @media (max-width: 880px) {
   .journey__experience { grid-template-columns: 1fr; gap: 0; }

@@ -57,18 +57,18 @@
     setTimeout(finish, 1700); // end of the build choreography
   })();
 
-  /* ===== HEADER SCROLL ===== */
+  /* ===== HEADER SCROLL =====
+     A 30px sentinel at the top of the document drives the scrolled state —
+     no per-frame scroll listener needed. */
   const header = document.getElementById('header');
-  if (header) {
-    let lastScrollY = 0;
-    const onScroll = () => {
-      const y = window.scrollY;
-      if (y > 30) header.classList.add('header--scrolled');
-      else header.classList.remove('header--scrolled');
-      lastScrollY = y;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+  if (header && 'IntersectionObserver' in window) {
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:30px;pointer-events:none;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver((entries) => {
+      header.classList.toggle('header--scrolled', !entries[0].isIntersecting);
+    }).observe(sentinel);
   }
 
   /* ===== MOBILE MENU ===== */
