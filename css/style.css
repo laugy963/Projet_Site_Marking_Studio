@@ -26,7 +26,7 @@
   transition: transform var(--t-fast), background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
 }
 .btn:hover { transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
+.btn:active { transform: translateY(0) scale(0.985); }
 
 .btn--primary { --btn-bg: var(--ink); --btn-fg: var(--paper); --btn-bd: var(--ink); }
 .btn--primary:hover { --btn-bg: var(--accent); --btn-bd: var(--accent); }
@@ -115,6 +115,9 @@
 }
 .nav__list a:hover { opacity: 1; }
 .nav__list a:hover::after { width: 100%; left: 0; }
+/* Current section — set by the scrollspy in main.js */
+.nav__list a.is-active { opacity: 1; }
+.nav__list a.is-active::after { width: 100%; left: 0; }
 
 .header__actions { display: flex; align-items: center; gap: var(--space-4); }
 
@@ -272,6 +275,7 @@
   font-weight: 500;
   color: var(--text);
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 .stat__value .em-italic { color: var(--accent); font-style: italic; }
 .stat__label {
@@ -670,46 +674,7 @@
   overflow: hidden;
 }
 
-/* Browser mockup inside each example card */
-.mock {
-  width: 86%;
-  background: var(--paper-bright);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-md);
-  box-shadow: 0 18px 40px -20px rgba(20,21,26,0.25);
-  transform: rotate(-1.5deg);
-  transition: transform var(--t-slow);
-}
-.example-card:hover .mock { transform: rotate(0) translateY(-4px); }
-.mock__chrome {
-  display: flex; gap: 5px;
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--rule);
-}
-.mock__chrome span {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--rule);
-}
-.mock__chrome span:first-child { background: var(--accent); opacity: 0.4; }
-.mock__body { padding: var(--space-4); display: flex; flex-direction: column; gap: 6px; }
-.mock__bar {
-  height: 6px; border-radius: 2px;
-  background: var(--rule);
-}
-.mock__bar--accent { background: var(--accent); opacity: 0.7; width: 30%; }
-.mock__bar--h {
-  height: 14px;
-  background: linear-gradient(to right, var(--ink) 60%, transparent 60%);
-  margin-bottom: 6px;
-}
-.mock__grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 6px; margin-top: 4px;
-}
-.mock__grid div { aspect-ratio: 1; background: var(--rule); border-radius: 2px; }
-.mock__grid div:nth-child(2) { background: var(--accent); opacity: 0.5; }
-
-/* Real project screenshots replacing CSS mocks */
+/* Real project screenshots fill each example card */
 .example-card__img {
   position: absolute;
   inset: 0;
@@ -818,7 +783,9 @@
   font-size: 0.95rem;
   color: var(--text-muted);
   line-height: 1.45;
-  min-height: 3em;
+  /* Reserve room for the longest blurb so the price + feature lists
+     start at the same Y across all three cards */
+  min-height: 4.5em;
 }
 
 .price-card__price {
@@ -840,6 +807,7 @@
   line-height: 1;
   font-weight: 500;
   letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
 }
 .price-card__currency {
   font-family: var(--font-display);
@@ -1285,6 +1253,19 @@
 @media (max-width: 560px) {
   .footer__top { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================================
+   LAYOUT UTILITIES — relocated from inline styles
+   ========================================================================== */
+.journey__grid,
+.examples__grid,
+.pricing__grid { margin-top: clamp(3rem, 6vh, 4.5rem); }
+
+.pricing__cta { text-align: center; margin-top: clamp(2rem, 4vh, 3rem); }
+
+.inline-cta { margin-top: clamp(1.5rem, 3vh, 2rem); }
+
+.faq__intro .section__title { max-width: 14ch; }
 
 /* ==========================================================================
    RESPONSIVE — comprehensive mobile/tablet pass
