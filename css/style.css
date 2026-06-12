@@ -319,6 +319,17 @@
 .hero__strap .label,
 .hero__strap .folio { color: #F8F4EA; }
 
+/* Ghost CTA sits on the dark hero photo — needs light ink, not page ink */
+.hero .btn--ghost {
+  --btn-fg: var(--paper-bright);
+  --btn-bd: rgba(242, 237, 225, 0.5);
+}
+.hero .btn--ghost:hover {
+  --btn-bg: var(--paper-bright);
+  --btn-fg: var(--ink);
+  --btn-bd: var(--paper-bright);
+}
+
 @media (max-width: 720px) {
   .hero__stats { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
   .hero__foot { grid-template-columns: 1fr; }
@@ -1651,56 +1662,6 @@ html.intro-active:not(.js) .build-intro {
 @keyframes intro-fade-up{ to { opacity: 1; transform: translateY(0); } }
 
 /* ==========================================================================
-   HERO STAMP — "édition limitée" ink mark
-   ========================================================================== */
-.hero__stamp {
-  position: absolute;
-  top: clamp(5.5rem, 15vh, 8.5rem);
-  right: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 0.6em 0.9em;
-  border: 1.5px solid var(--accent);
-  border-radius: var(--radius-sm);
-  color: var(--accent);
-  text-align: center;
-  background: rgba(14, 15, 20, 0.18);
-  box-shadow: inset 0 0 0 3px rgba(216, 96, 79, 0.12);
-  opacity: 0.92;
-  transform: rotate(-4deg);
-  animation: stamp-press 640ms var(--ease) 520ms backwards;
-}
-.hero__stamp-edition {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.hero__stamp-status {
-  font-family: var(--font-body);
-  font-size: 0.56rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(216, 96, 79, 0.85);
-}
-@keyframes stamp-press {
-  from { opacity: 0; transform: rotate(-13deg) scale(1.35); filter: blur(5px); }
-  55%  { filter: blur(0); }
-  to   { opacity: 0.92; transform: rotate(-4deg) scale(1); filter: blur(0); }
-}
-@media (max-width: 720px) {
-  .hero__stamp { top: 4.75rem; padding: 0.5em 0.7em; transform: rotate(-4deg) scale(0.85); transform-origin: top right; }
-}
-@media (max-width: 420px) {
-  .hero__stamp { display: none; }
-}
-
-/* ==========================================================================
    REFONTE — before / after comparison slider
    ========================================================================== */
 .compare {
@@ -2040,19 +2001,19 @@ html.intro-active:not(.js) .build-intro {
   color: var(--text-muted);
   border-top: 1px solid var(--rule);
 }
-.dev__caption::after { content: '01 — Découverte'; }
+.dev__caption::after { content: '01 · Découverte'; }
 
 /* --- Stage 1 · wireframe (Découverte) --- */
 .journey__device[data-stage="1"] .dev__block { background: transparent; border: 1.5px dashed var(--rule); }
 .journey__device[data-stage="1"] .dev__url::after { content: 'esquisse.txt'; }
-.journey__device[data-stage="1"] .dev__caption::after { content: '01 — Découverte'; }
+.journey__device[data-stage="1"] .dev__caption::after { content: '01 · Découverte'; }
 
 /* --- Stage 2 · design (maquette colorée) --- */
 .journey__device[data-stage="2"] .dev__block { background: var(--paper-deep); border: 1px solid transparent; }
 .journey__device[data-stage="2"] .dev__block--head { background: var(--accent); }
 .journey__device[data-stage="2"] .dev__block--hero { background: var(--ink); }
 .journey__device[data-stage="2"] .dev__url::after { content: 'maquette.fig'; }
-.journey__device[data-stage="2"] .dev__caption::after { content: '02 — Design'; }
+.journey__device[data-stage="2"] .dev__caption::after { content: '02 · Design'; }
 
 /* --- Stage 3 · développement (codé + grille) --- */
 .journey__device[data-stage="3"] .dev__block { background: var(--paper-deep); border: 1px solid transparent; }
@@ -2066,7 +2027,7 @@ html.intro-active:not(.js) .build-intro {
 }
 .journey__device[data-stage="3"] .dev__dot:nth-child(2) { background: var(--accent); opacity: 0.35; }
 .journey__device[data-stage="3"] .dev__url::after { content: 'localhost:8080'; }
-.journey__device[data-stage="3"] .dev__caption::after { content: '03 — Développement'; }
+.journey__device[data-stage="3"] .dev__caption::after { content: '03 · Développement'; }
 
 /* --- Stage 4 · mise en ligne (live) --- */
 .journey__device[data-stage="4"] .dev__block { background: var(--paper-deep); border: 1px solid transparent; }
@@ -2074,7 +2035,7 @@ html.intro-active:not(.js) .build-intro {
 .journey__device[data-stage="4"] .dev__block--hero { background: var(--ink); }
 .journey__device[data-stage="4"] .dev__live { opacity: 1; transform: translateY(0); }
 .journey__device[data-stage="4"] .dev__url::after { content: 'markingstudio.fr'; }
-.journey__device[data-stage="4"] .dev__caption::after { content: '04 — Mise en ligne'; }
+.journey__device[data-stage="4"] .dev__caption::after { content: '04 · Mise en ligne'; }
 
 @media (max-width: 880px) {
   .journey__experience { grid-template-columns: 1fr; gap: 0; }
