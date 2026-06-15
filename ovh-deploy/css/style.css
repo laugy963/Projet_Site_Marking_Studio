@@ -890,9 +890,28 @@
 .testimonial blockquote { color: rgba(242, 237, 225, 0.88); }
 .testimonial__name { color: var(--paper-bright); }
 .testimonial__role { color: rgba(242, 237, 225, 0.55); }
-.about__reasons .label { color: rgba(242, 237, 225, 0.65); }
-.about__reasons dd { color: rgba(242, 237, 225, 0.72); }
-.about__reasons dl > div { border-color: rgba(242, 237, 225, 0.15); }
+.about__reasons .label {
+  color: rgba(242, 237, 225, 0.65);
+  margin-bottom: var(--space-6);
+}
+.about__reasons dl { display: flex; flex-direction: column; }
+.about__reasons dl > div {
+  padding: var(--space-5) 0;
+  border-top: 1px solid rgba(242, 237, 225, 0.15);
+}
+.about__reasons dl > div:last-child { border-bottom: 1px solid rgba(242, 237, 225, 0.15); }
+.about__reasons dt {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent);
+  font-size: 1.15rem;
+  margin-bottom: var(--space-2);
+}
+.about__reasons dd {
+  margin: 0;
+  color: rgba(242, 237, 225, 0.72);
+  line-height: 1.65;
+}
 
 .about__layout {
   display: grid;
