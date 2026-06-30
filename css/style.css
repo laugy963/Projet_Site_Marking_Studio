@@ -27,6 +27,11 @@
 }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0) scale(0.985); }
+/* Disabled / in-flight (submit during "Envoi en cours…") — read as non-interactive. */
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:active { opacity: 0.6; cursor: progress; transform: none; }
+.btn:disabled:hover::after { opacity: 0; }
 
 .btn--primary { --btn-bg: var(--ink); --btn-fg: var(--paper); --btn-bd: var(--ink); }
 .btn--primary:hover { --btn-bg: var(--accent); --btn-bd: var(--accent); }
@@ -1235,6 +1240,12 @@
   margin-block: var(--space-3) var(--space-3);
 }
 .form-success p { color: var(--text-muted); }
+/* Programmatic focus target (tabindex=-1) for screen-reader announcement —
+   no visible ring; it's a status message, not an interactive control. */
+.form-success:focus { outline: none; }
+/* On success the form keeps its card; only the fields collapse, leaving the
+   confirmation (a child of the form) visible and focusable. */
+.contact__form.is-sent > :not(.form-success) { display: none; }
 
 @media (max-width: 880px) {
   .contact__layout { grid-template-columns: 1fr; }

@@ -233,35 +233,60 @@
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = 'Envoi en cours…';
+      form.setAttribute('aria-busy', 'true');
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
+
+      // Guard against a stalled network: abort after 15s so the user is never
+      // left stranded on "Envoi en cours…" with no way forward.
+      const controller = new AbortController();
+      let timedOut = false;
+      const timeout = setTimeout(() => { timedOut = true; controller.abort(); }, 15000);
+
+      const restore = () => {
+        clearTimeout(timeout);
+        form.removeAttribute('aria-busy');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      };
+      const fail = (msg) => {
+        restore();
+        if (submitErrMsg) {
+          submitErrMsg.textContent = msg;
+          submitErrMsg.hidden = false;
+          submitErrMsg.scrollIntoView({ behavior: scrollBehavior, block: 'center' });
+        }
+      };
 
       fetch(form.action, {
         method: 'POST',
         body: new FormData(form),
         headers: { Accept: 'application/json' },
+        signal: controller.signal,
       })
         .then((res) => {
           if (res.ok) {
-            form.style.display = 'none';
+            clearTimeout(timeout);
+            form.removeAttribute('aria-busy');
+            // Hide the fields (not the form itself) so the confirmation — which
+            // lives inside the form — stays visible and focusable in the card.
+            form.classList.add('is-sent');
             if (successMsg) {
               successMsg.hidden = false;
-              successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              // Move focus into the confirmation so screen-reader and keyboard
+              // users land on it (the fields they were in are now hidden).
+              successMsg.focus({ preventScroll: true });
+              successMsg.scrollIntoView({ behavior: scrollBehavior, block: 'center' });
             }
           } else {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-            if (submitErrMsg) {
-              submitErrMsg.textContent = 'Une erreur est survenue. Veuillez réessayer ou nous contacter par email.';
-              submitErrMsg.hidden = false;
-            }
+            fail('Une erreur est survenue. Veuillez réessayer ou nous contacter par email.');
           }
         })
         .catch(() => {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-          if (submitErrMsg) {
-            submitErrMsg.textContent = 'Impossible d\'envoyer le formulaire. Vérifiez votre connexion.';
-            submitErrMsg.hidden = false;
-          }
+          fail(timedOut
+            ? 'Le serveur met trop de temps à répondre. Vérifiez votre connexion et réessayez.'
+            : 'Impossible d\'envoyer le formulaire. Vérifiez votre connexion.');
         });
     });
 
