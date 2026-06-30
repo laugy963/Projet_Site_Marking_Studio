@@ -27,6 +27,11 @@
 }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0) scale(0.985); }
+/* Disabled / in-flight (submit during "Envoi en cours…") — read as non-interactive. */
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:active { opacity: 0.6; cursor: progress; transform: none; }
+.btn:disabled:hover::after { opacity: 0; }
 
 .btn--primary { --btn-bg: var(--ink); --btn-fg: var(--paper); --btn-bd: var(--ink); }
 .btn--primary:hover { --btn-bg: var(--accent); --btn-bd: var(--accent); }
@@ -119,7 +124,11 @@
 .nav__list a.is-active { opacity: 1; }
 .nav__list a.is-active::after { width: 100%; left: 0; }
 
-.header__actions { display: flex; align-items: center; gap: var(--space-4); }
+.mobile-menu .btn--primary:hover {
+  --btn-bg: #0E0F12;
+  --btn-fg: #FFFFFF;
+  --btn-bd: #0E0F12;
+}
 
 /* Mobile */
 .skip-link {
@@ -167,13 +176,20 @@
   transition: transform var(--t-med), visibility 0s;
 }
 .mobile-menu ul { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
-.mobile-menu a {
+.mobile-menu a:not(.btn) {
   font-family: var(--font-display); font-size: 1.4rem;
   color: var(--text);
 }
+.mobile-menu .btn {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+  --btn-bg: #0E0F12;
+  --btn-fg: #FFFFFF;
+  --btn-bd: #0E0F12;
+}
 
 @media (max-width: 960px) {
-  .nav, .header__actions .btn { display: none; }
+  .nav { display: none; }
   .menu-toggle { display: flex; }
 }
 
@@ -1254,6 +1270,12 @@
   margin-block: var(--space-3) var(--space-3);
 }
 .form-success p { color: var(--text-muted); }
+/* Programmatic focus target (tabindex=-1) for screen-reader announcement —
+   no visible ring; it's a status message, not an interactive control. */
+.form-success:focus { outline: none; }
+/* On success the form keeps its card; only the fields collapse, leaving the
+   confirmation (a child of the form) visible and focusable. */
+.contact__form.is-sent > :not(.form-success) { display: none; }
 
 @media (max-width: 880px) {
   .contact__layout { grid-template-columns: 1fr; }
