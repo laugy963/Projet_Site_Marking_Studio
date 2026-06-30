@@ -16,8 +16,8 @@ Design system extrait de `css/base.css` et `css/style.css`. Ce fichier est la r�
 | `--paper-deep` | `#E2DBC8` | Tranche de carte |
 | `--ink` | `#0E0F12` | Texte principal / fond verso |
 | `--text` | `#14151A` | Corps de texte |
-| `--text-muted` | `#5B5A55` | Texte secondaire |
-| `--text-faint` | `#8C8A82` | Texte discret |
+| `--text-muted` | `#5B5A55` | Texte secondaire (5.92:1 sur crème) |
+| `--text-faint` | `#66645C` | Texte discret (5.07:1 sur crème — AA). Discrétion portée par la taille + le tracking, pas par un faible contraste |
 | `--accent` | `#C44A38` | Corail signature — logo, `.em-italic`, ornements |
 | `--rule` | `#C9C1AC` | Traits horizontaux |
 

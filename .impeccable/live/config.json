@@ -1,0 +1,7 @@
+{
+  "files": ["*.html"],
+  "exclude": ["ovh-deploy/**"],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
+  "cspChecked": true
+}

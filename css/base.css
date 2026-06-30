@@ -77,7 +77,7 @@
 
   --text:         #14151A;
   --text-muted:   #5B5A55;
-  --text-faint:   #8C8A82;
+  --text-faint:   #66645C;   /* AA: 5.07:1 on cream (was #8C8A82, 2.96:1). Discrétion = taille + tracking, pas le contraste */
   --text-inverse: #F2EDE1;
 
   --rule:         #C9C1AC;   /* hairline on cream */
@@ -110,7 +110,7 @@
 
   --text:         #F2EDE1;
   --text-muted:   #9B968A;
-  --text-faint:   #6B675E;
+  --text-faint:   #8A857A;   /* AA: 5.22:1 on ink (was #6B675E, 3.40:1) — fixes verso placeholders */
   --text-inverse: #0E0F12;
 
   --rule:         #2A2C32;
