@@ -25,13 +25,10 @@
      so it starts downloading before the CSS that references it is parsed. -->
 <link rel="preload" as="image" href="images/hero-atelier.webp" fetchpriority="high">
 
-<!-- Fonts — preconnect to warm the connection, then load the stylesheet off the
-     render-blocking critical path. display=swap paints the serif fallback first
-     (Iowan/Times/Georgia → Lora), so first paint never waits on Google Fonts. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@400;500;600&display=swap"></noscript>
+<!-- Fonts — self-hosted, declared in css/base.css -->
+<link rel="preload" href="assets/fonts/lora-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/lora-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- Styles -->
 <link rel="stylesheet" href="css/base.css">
@@ -170,8 +167,8 @@
       </h1>
 
       <p class="hero__sub reveal">
-        Sites vitrines, e-commerce et refontes pour <strong>artisans, indépendants et PME</strong>
-        qui veulent un site crédible, rapide et qui génère de vraies demandes de contact.
+        Sites vitrines, e-commerce et refontes pour <strong>artisans, indépendants et PME</strong>.
+        Un site crédible, rapide, qui génère de vraies demandes.
       </p>
 
       <div class="hero__cta reveal">
@@ -832,22 +829,22 @@
       </div>
 
       <div class="about__reasons reveal">
-        <p class="label" style="margin-bottom: var(--space-6);">Pourquoi nous confier votre projet dès maintenant ?</p>
-        <dl style="display: flex; flex-direction: column; gap: 0;">
+        <p class="label">Pourquoi nous confier votre projet dès maintenant ?</p>
+        <dl>
 
-          <div style="padding: var(--space-5) 0; border-top: 1px solid var(--rule);">
-            <dt style="font-family: 'Lora', serif; font-style: italic; color: var(--accent); font-size: var(--text-md); margin-bottom: var(--space-2);">① Tarif fondateur</dt>
-            <dd style="margin: 0; color: rgba(242, 237, 225, 0.85); line-height: 1.65;">Les premiers clients bénéficient de nos tarifs de lancement. Ils augmenteront à mesure que le portfolio s'étoffe.</dd>
+          <div>
+            <dt>i. Tarif fondateur</dt>
+            <dd>Les premiers clients bénéficient de nos tarifs de lancement. Ils augmenteront à mesure que le portfolio s'étoffe.</dd>
           </div>
 
-          <div style="padding: var(--space-5) 0; border-top: 1px solid var(--rule);">
-            <dt style="font-family: 'Lora', serif; font-style: italic; color: var(--accent); font-size: var(--text-md); margin-bottom: var(--space-2);">② Votre site en vitrine</dt>
-            <dd style="margin: 0; color: rgba(242, 237, 225, 0.85); line-height: 1.65;">Votre projet peut devenir notre premier cas d'étude officiel, présenté dans notre portfolio avec votre accord.</dd>
+          <div>
+            <dt>ii. Votre site en vitrine</dt>
+            <dd>Votre projet peut devenir notre premier cas d'étude officiel, présenté dans notre portfolio avec votre accord.</dd>
           </div>
 
-          <div style="padding: var(--space-5) 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
-            <dt style="font-family: 'Lora', serif; font-style: italic; color: var(--accent); font-size: var(--text-md); margin-bottom: var(--space-2);">③ Attention maximale</dt>
-            <dd style="margin: 0; color: rgba(242, 237, 225, 0.85); line-height: 1.65;">Un seul projet à la fois : toute notre attention, pas de sous-traitance, pas de template.</dd>
+          <div>
+            <dt>iii. Attention maximale</dt>
+            <dd>Un seul projet à la fois : toute notre attention, pas de sous-traitance, pas de template.</dd>
           </div>
 
         </dl>
@@ -873,7 +870,7 @@
 
     <div class="faq__layout">
       <div class="faq__intro reveal">
-        <h2 class="section__title" style="max-width: 14ch;">
+        <h2 class="section__title">
           Tout ce que<br>
           vous voulez <span class="em-italic">savoir.</span>
         </h2>
