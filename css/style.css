@@ -72,6 +72,7 @@
 
 /* Logo — "Marking · Studio" set in the same Didone as the card */
 .logo { display: inline-flex; align-items: baseline; gap: 0.35em; color: var(--text); }
+.logo__img { display: block; height: 30px; width: auto; }
 .logo__mark {
   font-family: var(--font-display);
   font-size: 1.5rem;
@@ -1404,6 +1405,7 @@
   /* Header — compact */
   .header__inner { min-height: 64px; padding-block: 10px; }
   .logo__mark, .logo__mark-italic, .logo__dot { font-size: 1.25rem; }
+  .logo__img { height: 26px; }
 
   /* Mobile menu */
   .mobile-menu { top: 64px; }
