@@ -25,7 +25,7 @@ Succès = le visiteur passe du « mon site ne me ressemble plus » à « je veux
 - **Personnalité en 3 mots :** exigeant, éditorial, indépendant.
 - **Voix :** posée, sûre d'elle sans arrogance ; phrases courtes et nettes (« Un seul projet à la fois. »). Pas de superlatifs ni de jargon marketing.
 - **Émotion visée :** **confiance & exigence** — donner le sentiment d'un studio méticuleux et premium auquel on confie son image les yeux fermés.
-- **Métaphore d'identité :** la carte de visite imprimée recto/verso sur papier crème — artisanat, signature, objet soigné (voir [DESIGN.md](DESIGN.md)).
+- **Métaphore d'identité :** la carte de visite recto/verso, déclinée en « Studio Noir » — deux nuances de sombre, signature orange, objet soigné (voir [DESIGN.md](DESIGN.md)).
 
 ## Anti-references
 
@@ -40,7 +40,7 @@ Le studio se vend précisément sur le fait de ne **pas** « ressembler à tout 
 ## Design Principles
 
 1. **Le site est la démonstration.** Practice what you preach : chaque détail (vitesse, typographie, rythme) doit prouver le niveau que le studio vend. Aucun défaut « acceptable ».
-2. **Distinction avant conformité.** Si un choix pourrait apparaître sur n'importe quel template, le rejeter. L'identité recto/verso et l'accent coral unique sont la signature — les défendre.
+2. **Distinction avant conformité.** Si un choix pourrait apparaître sur n'importe quel template, le rejeter. L'identité recto/verso et l'accent orange unique sont la signature — les défendre.
 3. **Montrer, pas promettre.** Démonstrations de directions artistiques et refonte « glissez pour voir » plutôt que des adjectifs. La preuve par l'exemple.
 4. **Clarté sans jargon.** Process, prix et FAQ limpides pour un public non technique ; rassurer sans infantiliser. Aucun forfait piégé, tout est dit.
 5. **Studio à taille humaine.** « Un seul projet à la fois », signature à chaque livraison : la relation directe et l'exclusivité sont un argument, pas un slogan — les rendre tangibles.
@@ -48,7 +48,7 @@ Le studio se vend précisément sur le fait de ne **pas** « ressembler à tout 
 ## Accessibility & Inclusion
 
 - Cible : **WCAG 2.1 niveau AA**.
-- Contrastes corps de texte ≥ 4.5:1 (vigilance sur `--text-muted`/`--text-faint` sur fond crème), grand texte ≥ 3:1.
+- Contrastes corps de texte ≥ 4.5:1 (vigilance sur `--text-muted`/`--text-faint` sur fond charcoal), grand texte ≥ 3:1.
 - Navigation clavier complète, focus visibles, skip link (déjà présent), cibles tactiles ≥ 44×44px.
 - `prefers-reduced-motion` : alternative pour toutes les animations `.reveal` et transitions.
 - Sémantique HTML correcte, alternatives textuelles sur les images d'atelier/projets.

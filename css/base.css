@@ -1,7 +1,7 @@
 /* ==========================================================================
    MARKING STUDIO · BASE
-   Inspired by the studio's recto/verso business card —
-   cream paper, deep ink, coral signature, Didone display.
+   "Studio Noir" — charcoal paper, ivory ink, orange signature.
+   Bricolage Grotesque display over Inter body. Recto/verso = two shades of dark.
    ========================================================================== */
 
 /* ==========================================================================
@@ -9,35 +9,19 @@
    latin covers French incl. œ (U+0152-0153); latin-ext loads only if needed.
    ========================================================================== */
 @font-face {
-  font-family: 'Lora';
+  font-family: 'Bricolage Grotesque';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 200 800;
   font-display: swap;
-  src: url('../assets/fonts/lora-latin.woff2') format('woff2');
+  src: url('../assets/fonts/bricolage-grotesque-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Lora';
+  font-family: 'Bricolage Grotesque';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 200 800;
   font-display: swap;
-  src: url('../assets/fonts/lora-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Lora';
-  font-style: italic;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url('../assets/fonts/lora-italic-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Lora';
-  font-style: italic;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url('../assets/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  src: url('../assets/fonts/bricolage-grotesque-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -103,8 +87,8 @@
   --content-full: 100%;
 
   /* Fonts */
-  --font-display: "Lora", "Iowan Old Style", "Times New Roman", Georgia, serif;
-  --font-italic:  "Lora", "Iowan Old Style", "Times New Roman", Georgia, serif;
+  --font-display: "Bricolage Grotesque", "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --font-italic:  "Bricolage Grotesque", "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
@@ -116,35 +100,34 @@
 /* ==========================================================================
    PALETTE — light "recto" (default)
    ========================================================================== */
-:root,
-[data-theme='light'] {
-  /* Paper tones */
-  --paper:        #F2EDE1;   /* main cream paper */
-  --paper-soft:   #EBE5D6;   /* slightly deeper crease */
-  --paper-deep:   #E2DBC8;   /* the very edge of the card */
-  --paper-bright: #F8F4EA;   /* highlight crease */
+:root {
+  /* Paper tones — charcoal "recto" */
+  --paper:        #111316;   /* main charcoal sheet */
+  --paper-soft:   #191C20;   /* raised surface: marquee, cards, forms */
+  --paper-deep:   #21252B;   /* deeper: gradients, wireframe blocks */
+  --paper-bright: #F5F3EC;   /* IVORY — light text/element on dark (photos, chips) */
 
-  --ink:          #0E0F12;   /* deep navy-black, like the verso */
-  --ink-soft:     #181A1F;
-  --ink-2:        #2A2C32;
+  --ink:          #F5F3EC;   /* ivory — the strong contrast (buttons, featured, blocks) */
+  --ink-soft:     #E7E3D6;
+  --ink-2:        #C9C4B4;
 
-  --text:         #14151A;
-  --text-muted:   #5B5A55;
-  --text-faint:   #66645C;   /* AA: 5.07:1 on cream (was #8C8A82, 2.96:1). Discrétion = taille + tracking, pas le contraste */
-  --text-inverse: #F2EDE1;
+  --text:         #F1EFE7;   /* ivory body text on charcoal */
+  --text-muted:   #A6A196;   /* AA on charcoal (~7:1) */
+  --text-faint:   #837E72;   /* AA: ~4.8:1 on #111316. Discrétion = taille + tracking, pas le contraste */
+  --text-inverse: #111316;   /* charcoal — for text on ivory / orange */
 
-  --rule:         #C9C1AC;   /* hairline on cream */
-  --rule-soft:    #D9D3C0;
+  --rule:         #2B2F35;   /* hairline on charcoal */
+  --rule-soft:    #21252B;
 
-  /* Coral signature — "studio" + "Créateur" + § */
-  --accent:       #C44A38;
-  --accent-hover: #B23F2E;
-  --accent-soft:  #E8B8AF;
+  /* Orange signature — "studio" + "Créateur" + § */
+  --accent:       #FF6D14;
+  --accent-hover: #FF8A3D;
+  --accent-soft:  #4A2A13;   /* muted orange wash for the marker-highlight on dark */
 
-  /* Shadows warmed toward the ink so they sit on cream, not pure-black */
-  --shadow-sm: 0 1px 0 rgba(46, 34, 22, 0.05);
-  --shadow-md: 0 8px 24px -8px rgba(46, 34, 22, 0.12), 0 2px 4px rgba(46, 34, 22, 0.05);
-  --shadow-lg: 0 24px 60px -20px rgba(46, 34, 22, 0.20);
+  /* Shadows — deep, since we sit on near-black */
+  --shadow-sm: 0 1px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 30px 70px -24px rgba(0, 0, 0, 0.7);
 }
 
 /* ==========================================================================
@@ -152,26 +135,26 @@
    (NOT page-wide; recto/verso lives in <section data-section="verso">)
    ========================================================================== */
 [data-section='verso'] {
-  --paper:        #0E0F12;
-  --paper-soft:   #14151A;
-  --paper-deep:   #1A1C22;
-  --paper-bright: #1F2027;
+  --paper:        #0A0B0D;   /* near-black "verso" — the card's back */
+  --paper-soft:   #121417;
+  --paper-deep:   #181B1F;
+  --paper-bright: #F5F3EC;   /* ivory light element */
 
-  --ink:          #F2EDE1;
-  --ink-soft:     #E8E1CE;
-  --ink-2:        #C7BFAA;
+  --ink:          #F5F3EC;
+  --ink-soft:     #E7E3D6;
+  --ink-2:        #C9C4B4;
 
-  --text:         #F2EDE1;
-  --text-muted:   #9B968A;
-  --text-faint:   #8A857A;   /* AA: 5.22:1 on ink (was #6B675E, 3.40:1) — fixes verso placeholders */
-  --text-inverse: #0E0F12;
+  --text:         #F1EFE7;
+  --text-muted:   #A6A196;
+  --text-faint:   #837E72;   /* AA on near-black */
+  --text-inverse: #0A0B0D;
 
-  --rule:         #2A2C32;
-  --rule-soft:    #1F2027;
+  --rule:         #24282E;
+  --rule-soft:    #181B1F;
 
-  --accent:       #D8604F;
-  --accent-hover: #E6735F;
-  --accent-soft:  #5A2C25;
+  --accent:       #FF6D14;
+  --accent-hover: #FF8A3D;
+  --accent-soft:  #3E2410;
 
   color: var(--text);
   background: var(--paper);
@@ -381,6 +364,6 @@ body::before {
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
-  opacity: 0.05;
-  mix-blend-mode: multiply;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
 }

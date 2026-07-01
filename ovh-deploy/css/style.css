@@ -36,7 +36,7 @@
 .btn--primary { --btn-bg: var(--ink); --btn-fg: var(--paper); --btn-bd: var(--ink); }
 .btn--primary:hover { --btn-bg: var(--accent); --btn-bd: var(--accent); }
 
-.btn--accent { --btn-bg: var(--accent); --btn-fg: var(--paper-bright); --btn-bd: var(--accent); }
+.btn--accent { --btn-bg: var(--accent); --btn-fg: var(--text-inverse); --btn-bd: var(--accent); }
 .btn--accent:hover { --btn-bg: var(--accent-hover); --btn-bd: var(--accent-hover); }
 
 .btn--ghost { --btn-bg: transparent; --btn-fg: var(--text); --btn-bd: var(--rule); }
@@ -125,9 +125,9 @@
 .nav__list a.is-active::after { width: 100%; left: 0; }
 
 .mobile-menu .btn--primary:hover {
-  --btn-bg: #0E0F12;
-  --btn-fg: #FFFFFF;
-  --btn-bd: #0E0F12;
+  --btn-bg: var(--accent);
+  --btn-fg: var(--text-inverse);
+  --btn-bd: var(--accent);
 }
 
 /* Mobile */
@@ -183,9 +183,9 @@
 .mobile-menu .btn {
   align-self: flex-start;
   margin-top: var(--space-2);
-  --btn-bg: #0E0F12;
-  --btn-fg: #FFFFFF;
-  --btn-bd: #0E0F12;
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+  --btn-bd: var(--ink);
 }
 
 @media (max-width: 960px) {
@@ -247,7 +247,7 @@
   color: var(--accent);
   letter-spacing: -0.015em;
   font-weight: 500;
-  /* italic Lora benefits from a touch of air */
+  /* the oblique accent benefits from a touch of air */
   padding-right: 0.05em;
 }
 
@@ -342,7 +342,7 @@
 }
 .hero .btn--ghost:hover {
   --btn-bg: var(--paper-bright);
-  --btn-fg: var(--ink);
+  --btn-fg: var(--text-inverse);
   --btn-bd: var(--paper-bright);
 }
 
@@ -675,7 +675,7 @@
   display: flex; justify-content: space-between; align-items: baseline;
   padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid var(--rule);
-  background: var(--paper-bright);
+  background: var(--paper-soft);
 }
 .example-card__title {
   font-family: var(--font-display);
@@ -718,7 +718,9 @@
   margin-top: var(--space-12);
   text-align: center;
   padding: var(--space-12) var(--space-6);
-  background: url('../images/trait-coral.webp') center / cover no-repeat;
+  background:
+    linear-gradient(rgba(10, 11, 13, 0.80), rgba(10, 11, 13, 0.80)),
+    url('../images/trait-coral.webp') center / cover no-repeat;
   border: 1px solid rgba(255, 255, 255, 0.12);
   position: relative;
 }
@@ -762,9 +764,16 @@
 }
 .price-card:last-child { border-right: 0; }
 .price-card--featured {
+  --accent: #C2560E;   /* deeper orange — reads on the ivory featured card */
   background: var(--ink);
   color: var(--paper);
   border-top: 3px solid var(--accent);
+}
+/* On the light featured card, keep the CTA a high-contrast dark pill (orange text
+   on ivory wouldn't hit AA); hover feedback still comes from the inner line + lift. */
+.price-card--featured .btn--accent,
+.price-card--featured .btn--accent:hover {
+  --btn-bg: #16181C; --btn-fg: #F6F4EC; --btn-bd: #16181C;
 }
 .price-card--featured .price-card__name,
 .price-card--featured .price-card__amount,
@@ -772,10 +781,10 @@
 .price-card--featured .price-card__features li { color: var(--paper); }
 .price-card--featured .price-card__amount .em-italic { color: var(--accent); }
 .price-card--featured .price-card__features li::before { color: var(--accent); }
-.price-card--featured .price-card__features li { border-bottom-color: rgba(242,237,225,0.1); }
-.price-card--featured .price-card__desc { color: rgba(242,237,225,0.7); }
-.price-card--featured .price-card__top-label { color: rgba(242,237,225,0.6); }
-.price-card--featured .price-card__from { color: rgba(242,237,225,0.55); }
+.price-card--featured .price-card__features li { border-bottom-color: rgba(17,19,22,0.12); }
+.price-card--featured .price-card__desc { color: rgba(17,19,22,0.62); }
+.price-card--featured .price-card__top-label { color: rgba(17,19,22,0.55); }
+.price-card--featured .price-card__from { color: rgba(17,19,22,0.5); }
 
 .price-card__top {
   display: flex; justify-content: space-between; align-items: center;
@@ -783,7 +792,7 @@
   border-bottom: 1px solid var(--rule);
   margin-bottom: var(--space-4);
 }
-.price-card--featured .price-card__top { border-bottom-color: rgba(242,237,225,0.15); }
+.price-card--featured .price-card__top { border-bottom-color: rgba(17,19,22,0.14); }
 .price-card__top-label {
   font-family: var(--font-body);
   font-size: 0.66rem;
@@ -821,7 +830,7 @@
   padding-block: var(--space-5);
   margin-block: var(--space-3);
 }
-.price-card--featured .price-card__price { border-color: rgba(242,237,225,0.15); }
+.price-card--featured .price-card__price { border-color: rgba(17,19,22,0.14); }
 .price-card__from {
   font-family: var(--font-body);
   font-style: italic;
@@ -1738,8 +1747,8 @@ html.intro-active:not(.js) .build-intro {
   text-transform: uppercase;
   border-radius: var(--radius-pill);
 }
-.compare__tag--before { left: var(--space-4);  background: var(--ink);    color: var(--paper-bright); }
-.compare__tag--after  { right: var(--space-4); background: var(--accent); color: var(--paper-bright); }
+.compare__tag--before { left: var(--space-4);  background: var(--ink);    color: var(--text-inverse); }
+.compare__tag--after  { right: var(--space-4); background: var(--accent); color: var(--text-inverse); }
 
 .compare__divider {
   position: absolute;
@@ -1806,7 +1815,21 @@ html.intro-active:not(.js) .build-intro {
 
 /* ---- AFTER mockup (Marking, clean editorial) ---- */
 .mk { position: absolute; inset: 0; display: flex; flex-direction: column; }
-.mk--new { background: var(--paper); }
+/* The "after" preview is a screenshot of a clean site — a light card inside the dark page */
+.mk--new {
+  --paper: #FBFAF5;
+  --paper-soft: #F0EEE6;
+  --paper-deep: #E6E3D8;
+  --paper-bright: #FFFFFF;
+  --ink: #16181C;
+  --text: #16181C;
+  --text-muted: #6E6B62;
+  --rule: #E2DDCE;
+  --rule-soft: #EDE9DC;
+  --accent: #C2560E;
+  --text-inverse: #FBFAF5;
+  background: var(--paper);
+}
 .mk--new__bar {
   display: flex; align-items: center; gap: 0.5em;
   height: 9%;
@@ -1858,7 +1881,7 @@ html.intro-active:not(.js) .build-intro {
   font-size: clamp(0.6rem, 1.2vw, 0.82rem);
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: var(--paper-bright);
+  color: var(--text-inverse);
   background: var(--ink);
   border-radius: var(--radius-pill);
 }
@@ -1977,6 +2000,19 @@ html.intro-active:not(.js) .build-intro {
   top: clamp(96px, 14vh, 140px);
 }
 .journey__device {
+  /* A live preview of the site being built — a light "screen" on the dark page */
+  --paper: #FBFAF5;
+  --paper-soft: #F0EEE6;
+  --paper-deep: #E6E3D8;
+  --paper-bright: #FFFFFF;
+  --ink: #16181C;
+  --text: #16181C;
+  --text-muted: #6E6B62;
+  --text-faint: #8C897E;
+  --rule: #E2DDCE;
+  --rule-soft: #EDE9DC;
+  --accent: #C2560E;
+  --text-inverse: #FBFAF5;
   width: 100%;
   max-width: 420px;
   margin-inline: auto;
@@ -2023,7 +2059,7 @@ html.intro-active:not(.js) .build-intro {
   font-family: var(--font-body);
   font-size: 0.55rem; font-weight: 600;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--paper-bright);
+  color: var(--text-inverse);
   background: var(--accent);
   padding: 3px 8px;
   border-radius: var(--radius-pill);
@@ -2090,7 +2126,7 @@ html.intro-active:not(.js) .build-intro {
    MICRO-TOUCHES
    ========================================================================== */
 
-/* a) Marker highlight — a soft champagne/coral stroke swipes behind key words */
+/* a) Marker highlight — a soft orange wash swipes behind key words */
 .mark-hl {
   background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
   background-repeat: no-repeat;

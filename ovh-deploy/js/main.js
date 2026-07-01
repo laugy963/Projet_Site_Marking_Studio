@@ -9,9 +9,9 @@
   document.documentElement.classList.add('js');
 
   /* ===== THEME =====
-     The site is always cream (recto). The recto/verso rhythm is achieved
-     per-section via [data-section="verso"], not a global theme. */
-  document.documentElement.setAttribute('data-theme', 'light');
+     "Studio Noir" — the page is always dark (charcoal recto). The recto/verso
+     rhythm is a second, deeper dark applied per-section via
+     [data-section="verso"], not a global theme attribute. */
 
   /* ===== INTRO OVERLAY — "le site se construit" =====
      The <head> script adds html.intro-active before first paint (once per

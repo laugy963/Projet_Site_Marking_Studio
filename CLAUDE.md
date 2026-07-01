@@ -28,14 +28,14 @@ Il n'y a aucune étape de build — le dossier racine est le dossier de déploie
 - `css/style.css` — styles spécifiques à chaque composant et section
 - `js/main.js` — IIFE vanilla ; gère : scroll header, menu mobile, IntersectionObserver pour `.reveal`, validation formulaire de contact (front-end only, pas de backend), smooth scroll ancres
 
-**Recto / Verso :** Le site adopte le rythme visuel d'une carte de visite recto/verso. La palette « recto » (fond crème `#F2EDE1`) est appliquée globalement. Les sections avec `data-section="verso"` (pain, contact) basculent vers la palette encre sombre via un bloc CSS dédié dans `base.css`. Ne jamais appliquer `[data-theme='dark']` au niveau `<html>` — le thème sombre n'est pas global.
+**Thème « Studio Noir » (recto / verso) :** Le site est **sombre en global**. La palette « recto » (fond charcoal `#111316`) est appliquée par défaut via `:root`. Les sections avec `data-section="verso"` (pain, contact) basculent vers un noir plus profond (`#0A0B0D`) via un bloc CSS dédié dans `base.css` — le rythme recto/verso de la carte de visite est donc deux nuances de noir. Il n'y a plus d'attribut `data-theme` sur `<html>` : ne pas le réintroduire. Sur fond sombre, `--ink` = ivoire (couleur de contraste : boutons, carte tarif « featured », blocs), `--paper-bright` = ivoire clair (texte/élément clair sur photo). Les maquettes qui représentent un site (`.mk--new`, `.journey__device`) re-scopent des tokens **clairs** localement pour ressembler à des captures d'écran.
 
 **Tokens de couleur clés :**
-- `--paper` / `--ink` — s'inversent entre recto et verso
-- `--accent` — rouge corail `#C44A38` (recto) / `#D8604F` (verso)
-- `--text-muted`, `--rule` — tons secondaires sur crème
+- `--paper` (fond sombre) / `--ink` (ivoire de contraste) — inversés recto ↔ verso
+- `--accent` — orange `#FF6D14` (recto + verso) ; variante foncée `#C2560E` scopée sur la carte tarif ivoire et les maquettes claires. Texte sur orange = foncé (`--text-inverse`). Le bouton de la carte tarif « featured » est forcé en pill sombre (orange sur ivoire ne passe pas AA)
+- `--text-muted`, `--text-faint`, `--rule` — tons secondaires sur charcoal (calibrés AA)
 
-**Typographie :** Lora (serif italique, titres et `.em-italic`) + Inter (UI, labels, corps). Le contraste éditorial repose sur l'alternance Lora italic (accent coral) / Inter (texte courant).
+**Typographie :** Bricolage Grotesque (grotesk caractériel, titres, `.em-italic` et numéraux — l'italique est un oblique synthétisé) + Inter (UI, labels, corps). Auto-hébergées en woff2 (`assets/fonts/`, pas de CDN Google, RGPD + perf). Le contraste repose sur l'alternance Bricolage Grotesque display / accents orange obliques vs Inter texte courant.
 
 **Animations :** Les éléments avec `.reveal` démarrent à `opacity:0; transform:translateY(14px)` et passent à `is-visible` via IntersectionObserver. Si JS est absent, `html:not(.js) .reveal` s'affiche directement.
 

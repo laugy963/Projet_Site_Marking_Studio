@@ -79,7 +79,7 @@ Contenu minimum obligatoire par page :
   <span class="hero__title-line">Un seul projet</span>
   <span class="hero__title-line"><span class="em-italic">à la fois.</span></span>
   ```
-- L'ornement `.em-italic` (Lora italic, corail) s'applique à "à la fois." — partie mémorable de la promesse
+- L'ornement `.em-italic` (Bricolage Grotesque oblique, orange) s'applique à "à la fois." — partie mémorable de la promesse
 
 ### 5. Série A — mise à jour du prix
 - Prix affiché passe de **€1,490** à **€1,990** (prix fixe, pas "à partir de")
@@ -132,7 +132,7 @@ Checklist post-déploiement :
 5. Cliquer le CTA `tel:` sur mobile → vérifier que le bon numéro s'ouvre (+33651390126)
 6. Vérifier que la Série A affiche bien **1 990 €** sans "à partir de", que B et C gardent "à partir de"
 7. Valider le JSON-LD via Google Rich Results Test
-8. Vérifier que le hero affiche "Un seul projet" ligne 1 + "à la fois." en corail ligne 2
+8. Vérifier que le hero affiche "Un seul projet" ligne 1 + "à la fois." en orange ligne 2
 9. Vérifier que hero sig et contact affichent `markingstudio.fr` (pas `marking.com`)
 
 ---
