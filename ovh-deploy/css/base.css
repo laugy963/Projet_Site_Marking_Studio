@@ -172,7 +172,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
-  scroll-padding-top: 92px;
+  /* Volontairement < hauteur du header : le padding-top des sections glisse
+     sous le header fixe, le titre atterrit juste en dessous. */
+  scroll-padding-top: 24px;
 }
 
 body {
@@ -343,14 +345,44 @@ a, button, [role='button'], input, textarea, select {
   line-height: 1.45;
 }
 
-/* Reveal-on-scroll */
+/* Reveal-on-scroll — bidirectionnel (façon Wibify) : l'élément se révèle à
+   l'entrée du viewport et se range quand il en sort, par le haut comme par
+   le bas, pour rejouer au scroll inverse. L'état caché pointe vers le bord
+   de sortie : par défaut vers le bas (avant première entrée / sortie basse),
+   `.is-above` après une sortie par le haut. La sortie est plus rapide que
+   l'entrée et sans délai (les délais d'entrée sont scopés sur .is-visible). */
 .reveal {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 800ms var(--ease), transform 800ms var(--ease);
+  transform: translateY(22px);
+  transition: opacity 480ms var(--ease), transform 480ms var(--ease);
+}
+.reveal.is-above { transform: translateY(-18px); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition-duration: 800ms;
 }
 html:not(.js) .reveal { opacity: 1; transform: none; }
-.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* Reveal-words — apparition des titres mot à mot : chaque mot monte d'un
+   demi-cadratin en passant du flou au net (blur 6px → 0), en cascade.
+   Le découpage en spans .rw est fait par main.js ; sans JS ou sous
+   prefers-reduced-motion les spans n'existent pas, donc rien n'est masqué. */
+.reveal-words .rw {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.45em);
+  filter: blur(6px);
+  transition: opacity 420ms var(--ease), transform 420ms var(--ease), filter 420ms var(--ease);
+}
+.reveal-words.is-above .rw { transform: translateY(-0.3em); }
+.reveal-words.is-visible .rw {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-duration: 900ms;
+  transition-delay: calc(var(--wi, 0) * 70ms);
+}
 
 /* ==========================================================================
    PAPER GRAIN — faint filmic tooth over the whole sheet (recto + verso),

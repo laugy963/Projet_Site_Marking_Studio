@@ -45,6 +45,9 @@
       finished = true;
       unbind();
       overlay.classList.add('is-out');
+      // Les reveals attendent la fin de l'intro pour que la cascade du hero
+      // (mots du titre, strap, CTA…) se joue à découvert, pas sous l'overlay.
+      window.dispatchEvent(new CustomEvent('ms:intro-done'));
       const cleanup = () => {
         overlay.removeEventListener('transitionend', cleanup);
         root.classList.remove('intro-active');
@@ -210,23 +213,94 @@
     });
   }
 
-  /* ===== REVEAL ON SCROLL ===== */
-  const reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && reveals.length) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
+  /* ===== REVEAL ON SCROLL — bidirectionnel, façon Wibify =====
+     Les titres .reveal-words sont éclatés en mots (.rw) qui montent du flou
+     vers le net, en cascade (--wi = index du mot). Tous les reveals se
+     rangent quand ils sortent du viewport — par le haut comme par le bas —
+     et rejouent au scroll inverse ; l'état caché pointe vers le bord de
+     sortie (is-above après une sortie haute). Sous reduced-motion : pas de
+     découpage et révélation one-shot (aucune animation de sortie). */
+  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  const wordReveals = Array.from(document.querySelectorAll('.reveal-words'));
+
+  if (!reduceMotionPref) {
+    wordReveals.forEach((el) => {
+      // Le nom accessible reste la phrase entière ; les spans sont décoratifs
+      const label = el.textContent.trim().replace(/\s+/g, ' ');
+      if (label) el.setAttribute('aria-label', label);
+      let wi = 0;
+      (function splitWords(node) {
+        Array.from(node.childNodes).forEach((child) => {
+          if (child.nodeType === Node.TEXT_NODE) {
+            if (!child.textContent.trim()) return; // garder les blancs purs
+            const frag = document.createDocumentFragment();
+            child.textContent.split(/(\s+)/).forEach((part) => {
+              if (!part) return;
+              if (/\S/.test(part)) {
+                const w = document.createElement('span');
+                w.className = 'rw';
+                w.style.setProperty('--wi', wi++);
+                w.setAttribute('aria-hidden', 'true');
+                w.textContent = part;
+                frag.appendChild(w);
+              } else {
+                frag.appendChild(document.createTextNode(part));
+              }
+            });
+            node.replaceChild(frag, child);
+          } else if (child.nodeType === Node.ELEMENT_NODE) {
+            splitWords(child);
           }
         });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
-    );
-    reveals.forEach((el) => observer.observe(el));
+      })(el);
+    });
+  }
+
+  const observed = reduceMotionPref ? reveals : reveals.concat(wordReveals);
+  if ('IntersectionObserver' in window && observed.length) {
+    let observer;
+    if (reduceMotionPref) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+      );
+    } else {
+      // Bande d'observation légèrement rentrée en haut (-6%) : la sortie se
+      // déclenche pendant que l'élément est encore à l'écran, donc visible.
+      // threshold 0 (et pas 0.1) : un élément plus haut que le viewport
+      // (ex. answer-stack) doit réapparaître dès son premier pixel visible.
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const el = entry.target;
+            if (entry.isIntersecting) {
+              el.classList.add('is-visible');
+              el.classList.remove('is-above');
+            } else {
+              el.classList.remove('is-visible');
+              const rootTop = entry.rootBounds ? entry.rootBounds.top : 0;
+              el.classList.toggle('is-above', entry.boundingClientRect.top < rootTop);
+            }
+          });
+        },
+        { threshold: 0, rootMargin: '-6% 0px -60px 0px' }
+      );
+    }
+    const startObserving = () => observed.forEach((el) => observer.observe(el));
+    if (document.documentElement.classList.contains('intro-active')) {
+      window.addEventListener('ms:intro-done', startObserving, { once: true });
+    } else {
+      startObserving();
+    }
   } else {
-    reveals.forEach((el) => el.classList.add('is-visible'));
+    observed.forEach((el) => el.classList.add('is-visible'));
   }
 
   /* ===== MARKER HIGHLIGHTS ===== */
@@ -525,18 +599,6 @@
     }
   }
 
-  /* ===== SMOOTH SCROLL FOR ANCHORS ===== */
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (href === '#' || href.length <= 1) return;
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
-    });
-  });
+  /* ===== SMOOTH SCROLL FOR ANCHORS =====
+     ponytail: géré nativement par scroll-behavior + scroll-padding-top (base.css) */
 })();

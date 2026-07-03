@@ -180,7 +180,9 @@
 .mobile-menu a:not(.btn) {
   font-family: var(--font-display); font-size: 1.4rem;
   color: var(--text);
+  transition: color var(--t-fast);
 }
+.mobile-menu a:not(.btn):hover { color: var(--accent); }
 .mobile-menu .btn {
   align-self: flex-start;
   margin-top: var(--space-2);
@@ -192,6 +194,11 @@
 @media (max-width: 960px) {
   .nav { display: none; }
   .menu-toggle { display: flex; }
+}
+@media (min-width: 961px) {
+  /* Force-hide regardless of aria-hidden state so resizing past the
+     breakpoint with the menu open can't leave it stuck over the page. */
+  .mobile-menu { display: none; }
 }
 
 /* ==========================================================================
@@ -705,11 +712,12 @@
   gap: var(--space-6);
   padding: var(--space-7) var(--space-2);
 }
-/* Cascade des rangées à l'apparition (reveal + trait) */
+/* Cascade des rangées à l'apparition (reveal + trait) — délai à l'entrée
+   uniquement : la sortie (reveal bidirectionnel) repart sans délai */
 .works-index .work-row:nth-child(2) { --stagger: 90ms; }
 .works-index .work-row:nth-child(3) { --stagger: 180ms; }
 .works-index .work-row:nth-child(4) { --stagger: 270ms; }
-.work-row.reveal { transition-delay: var(--stagger, 0ms); }
+.work-row.reveal.is-visible { transition-delay: var(--stagger, 0ms); }
 /* Le filet bas se dessine de gauche à droite quand la rangée apparaît */
 .work-row::after {
   content: '';
@@ -1499,11 +1507,15 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
 .works-index,
 .pricing__grid { margin-top: clamp(3rem, 6vh, 4.5rem); }
 
-/* Cascade des reveals en grille — les items apparaissent en escalier */
-.pain__grid .reveal:nth-child(2),
-.pricing__grid .price-card.reveal:nth-child(2) { transition-delay: 90ms; }
-.pain__grid .reveal:nth-child(3),
-.pricing__grid .price-card.reveal:nth-child(3) { transition-delay: 180ms; }
+/* Cascade des reveals en grille — les items apparaissent en escalier.
+   Délais scopés sur .is-visible : l'entrée cascade, la sortie est immédiate. */
+.pain__grid .reveal.is-visible:nth-child(2),
+.pricing__grid .price-card.reveal.is-visible:nth-child(2) { transition-delay: 90ms; }
+.pain__grid .reveal.is-visible:nth-child(3),
+.pricing__grid .price-card.reveal.is-visible:nth-child(3) { transition-delay: 180ms; }
+
+/* Le lead suit la cascade des mots du titre qui le précède */
+.section__lead.reveal.is-visible { transition-delay: 140ms; }
 
 .pricing__cta { text-align: center; margin-top: clamp(2rem, 4vh, 3rem); }
 
@@ -1517,15 +1529,12 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
 
 /* TABLET — 1024px down */
 @media (max-width: 1024px) {
-  :root { scroll-padding-top: 80px; }
   .answer__layout { grid-template-columns: 1fr; gap: var(--space-10); }
   .answer__col-left { position: static; }
 }
 
 /* SMALL TABLET / LARGE MOBILE — 768px down */
 @media (max-width: 768px) {
-  html { scroll-padding-top: 76px; }
-
   .container {
     padding-inline: clamp(16px, 5vw, 24px);
   }
@@ -2459,18 +2468,11 @@ html:not(.js) .mark-hl { background-size: 100% 0.42em; }
 }
 .btn:hover::after { opacity: 0.4; transform: scale(1); }
 
-/* c) Hero entrance — elements cascade in, title arrives line by line */
-.hero__strap.reveal { transition-delay: 80ms; }
-/* Le titre arrive flou puis devient net (délai redéclaré après le shorthand) */
-.hero__title.reveal {
-  transition: opacity 800ms var(--ease), transform 800ms var(--ease), filter 900ms var(--ease);
-  transition-delay: 180ms;
-}
-.js .hero__title.reveal:not(.is-visible) { filter: blur(6px); }
-.hero__sub.reveal   { transition-delay: 320ms; }
-.hero__cta.reveal   { transition-delay: 440ms; }
-.hero__foot.reveal  { transition-delay: 560ms; }
-
-.hero__title-line { transition: transform 720ms var(--ease) 180ms; }
-.js .hero__title.reveal:not(.is-visible) .hero__title-line { transform: translateY(0.28em); }
-.hero__title.reveal.is-visible .hero__title-line:nth-child(2) { transition-delay: 320ms; }
+/* c) Hero entrance — cascade façon Wibify : le titre arrive mot à mot
+      (flou → net, via .reveal-words), le reste suit en escalier.
+      Délais scopés sur .is-visible : la sortie repart sans délai. */
+.hero__strap.reveal.is-visible { transition-delay: 80ms; }
+.hero__title.reveal-words.is-visible .rw { transition-delay: calc(180ms + var(--wi, 0) * 80ms); }
+.hero__sub.reveal.is-visible   { transition-delay: 400ms; }
+.hero__cta.reveal.is-visible   { transition-delay: 520ms; }
+.hero__foot.reveal.is-visible  { transition-delay: 640ms; }

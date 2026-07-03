@@ -76,8 +76,8 @@ Padding section : `clamp(5rem, 12vh, 8rem)` via `.section`.
 ### `.pilcrow` + `.fleur`
 Ornement fleur-de-lis SVG custom (inline), `color: var(--accent)`. Séparateur de section et ponctuation dans les listes.
 
-### `.reveal`
-Animation d'entrée au scroll : `opacity: 0; transform: translateY(14px)` → `is-visible` via IntersectionObserver. Sans JS, `html:not(.js) .reveal` s'affiche directement.
+### `.reveal` / `.reveal-words`
+Reveal au scroll **bidirectionnel** (façon Wibify) : `.reveal` part de `opacity: 0; translateY(22px)` et gagne `is-visible` (800ms `--ease`) à l'entrée du viewport ; à la sortie il se range vers le bord de sortie (`is-above` = `translateY(-18px)` après une sortie haute) en 480ms sans délai, puis rejoue au scroll inverse. Les grands titres `.reveal-words` sont éclatés en mots par `main.js` (spans `.rw`, stagger `--wi` × 70ms, +80ms/mot sur le hero) qui montent de `0.45em` en passant de `blur(6px)` au net — le nom accessible reste la phrase entière (`aria-label`). Sous reduced-motion : pas de découpage, reveal one-shot. Sans JS, `html:not(.js) .reveal` s'affiche directement et les `.rw` n'existent pas.
 
 ### Maquettes « captures d'écran » claires
 `.mk--new` (aperçu « après » du comparateur) et `.journey__device` (aperçu animé du processus) **re-scopent des tokens clairs** localement : ce sont des captures de sites, pas le chrome du site, donc elles restent claires sur la page sombre. `#C2560E` y sert d'accent.

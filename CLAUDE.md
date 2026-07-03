@@ -37,7 +37,7 @@ Il n'y a aucune étape de build — le dossier racine est le dossier de déploie
 
 **Typographie :** Bricolage Grotesque (grotesk caractériel, titres, `.em-italic` et numéraux — l'italique est un oblique synthétisé) + Inter (UI, labels, corps). Auto-hébergées en woff2 (`assets/fonts/`, pas de CDN Google, RGPD + perf). Le contraste repose sur l'alternance Bricolage Grotesque display / accents orange obliques vs Inter texte courant.
 
-**Animations :** Les éléments avec `.reveal` démarrent à `opacity:0; transform:translateY(14px)` et passent à `is-visible` via IntersectionObserver. Si JS est absent, `html:not(.js) .reveal` s'affiche directement.
+**Animations :** Système de reveal **bidirectionnel** (façon Wibify) piloté par IntersectionObserver dans `main.js` : les éléments `.reveal` gagnent `is-visible` à l'entrée du viewport et le perdent à la sortie (haut ou bas) pour rejouer au scroll inverse — l'état caché pointe vers le bord de sortie (`is-above` après une sortie haute, défaut = bas). Les grands titres portent `.reveal-words` : `main.js` les éclate en mots (spans `.rw`, index `--wi`, `aria-label` conservé sur le titre) qui montent du flou vers le net en cascade. Les délais d'entrée sont scopés sur `.is-visible` (la sortie repart sans délai, plus vite). Sous `prefers-reduced-motion` : pas de découpage et reveal one-shot ; sans JS, `html:not(.js) .reveal` s'affiche directement. La cascade du hero attend la fin de l'intro (événement `ms:intro-done`).
 
 **SVG fleur :** L'ornement fleur-de-lis custom (chemin SVG inline dans chaque `.pilcrow`) est répété dans tout le HTML. Modifier le SVG nécessite un remplacement global.
 
