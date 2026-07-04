@@ -225,6 +225,8 @@
   display: flex;
   flex-direction: column;
 }
+/* Scrubbé par JS au scroll (hero scroll exit) — réserve le layer côté compositeur */
+.js .hero__inner { will-change: transform, opacity; }
 
 .hero__strap {
   display: flex; justify-content: space-between; align-items: center;
@@ -240,8 +242,6 @@
   justify-content: center;
   padding-block: clamp(var(--space-12), 8vh, var(--space-24));
 }
-/* Scrubbé par JS au scroll (hero scroll exit) — réserve le layer côté compositeur */
-.js .hero__body { will-change: transform, opacity; }
 
 .hero__title {
   font-family: var(--font-display);
@@ -1513,6 +1513,8 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
 .pricing__grid .price-card.reveal.is-visible:nth-child(2) { transition-delay: 90ms; }
 .pain__grid .reveal.is-visible:nth-child(3),
 .pricing__grid .price-card.reveal.is-visible:nth-child(3) { transition-delay: 180ms; }
+.footer__top .reveal.is-visible:nth-child(2) { transition-delay: 90ms; }
+.footer__top .reveal.is-visible:nth-child(3) { transition-delay: 180ms; }
 
 /* Le lead suit la cascade des mots du titre qui le précède */
 .section__lead.reveal.is-visible { transition-delay: 140ms; }
@@ -2295,8 +2297,12 @@ html.intro-active:not(.js) .build-intro {
   position: relative;
   padding-left: clamp(0.9rem, 2vw, 1.5rem);
   opacity: 0.45;
-  transition: opacity 400ms var(--ease);
+  transition: opacity 400ms var(--ease), transform 480ms var(--ease);
 }
+/* Compose le reveal bidirectionnel avec le tamisage cinématique : hors
+   viewport l'étape est rangée (opacity 0, prime sur is-active) ; visible
+   mais non active, elle reste tamisée à 0.45. */
+.journey__experience.is-cinematic .journey-step.reveal:not(.is-visible) { opacity: 0; }
 .journey__experience.is-cinematic .journey-step::before {
   content: '';
   position: absolute;

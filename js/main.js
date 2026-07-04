@@ -77,12 +77,13 @@
   }
 
   /* ===== HERO SCROLL EXIT =====
-     Le bloc hero (titre + sous-titre + CTA) remonte plus vite que le scroll
-     et s'estompe — scrubbé, donc réversible en remontant. Jamais sous
-     reduced-motion ; sans JS, aucun style inline n'est posé. */
+     Tout le contenu du hero (strap, titre, sous-titre, CTA, rangée de stats)
+     remonte plus vite que le scroll et s'estompe — scrubbé, donc réversible
+     en remontant. Jamais sous reduced-motion ; sans JS, aucun style inline
+     n'est posé. */
   const hero = document.querySelector('.hero');
-  const heroBody = document.querySelector('.hero__body');
-  if (hero && heroBody && !reduceMotionPref) {
+  const heroInner = document.querySelector('.hero__inner');
+  if (hero && heroInner && !reduceMotionPref) {
     let heroH = hero.offsetHeight;
     let lastP = -1;
     let ticking = false;
@@ -93,10 +94,10 @@
       const p = Math.min(Math.max(window.scrollY / (heroH * 0.55), 0), 1);
       if (p === lastP) return;
       lastP = p;
-      heroBody.style.transform = 'translateY(' + (-p * heroH * 0.28).toFixed(1) + 'px)';
-      heroBody.style.opacity = String(1 - p);
+      heroInner.style.transform = 'translateY(' + (-p * heroH * 0.28).toFixed(1) + 'px)';
+      heroInner.style.opacity = String(1 - p);
       // Une fois invisible, les CTA ne doivent être ni cliquables ni focusables
-      heroBody.style.visibility = p >= 1 ? 'hidden' : '';
+      heroInner.style.visibility = p >= 1 ? 'hidden' : '';
     }
     function requestHeroExit() {
       // lastP < 1 rattrape un saut de scroll qui dépasse le hero d'un coup
@@ -258,25 +259,25 @@
 
   const observed = reduceMotionPref ? reveals : reveals.concat(wordReveals);
   if ('IntersectionObserver' in window && observed.length) {
-    let observer;
+    let makeObserver;
     if (reduceMotionPref) {
-      observer = new IntersectionObserver(
-        (entries) => {
+      makeObserver = (rootMargin) => new IntersectionObserver(
+        (entries, obs) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
+              obs.unobserve(entry.target);
             }
           });
         },
-        { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+        { threshold: 0.1, rootMargin }
       );
     } else {
       // Bande d'observation légèrement rentrée en haut (-6%) : la sortie se
       // déclenche pendant que l'élément est encore à l'écran, donc visible.
       // threshold 0 (et pas 0.1) : un élément plus haut que le viewport
       // (ex. answer-stack) doit réapparaître dès son premier pixel visible.
-      observer = new IntersectionObserver(
+      makeObserver = (rootMargin) => new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             const el = entry.target;
@@ -290,10 +291,16 @@
             }
           });
         },
-        { threshold: 0, rootMargin: '-6% 0px -60px 0px' }
+        { threshold: 0, rootMargin }
       );
     }
-    const startObserving = () => observed.forEach((el) => observer.observe(el));
+    const observer = makeObserver(reduceMotionPref ? '0px 0px -60px 0px' : '-6% 0px -60px 0px');
+    // Les éléments en toute fin de page (barre du footer) sont trop courts
+    // pour dégager 60px sous la ligne de flottaison au scroll maximal : bande
+    // sans retrait bas, sinon ils ne se révèlent jamais.
+    const edgeObserver = makeObserver(reduceMotionPref ? '0px' : '-6% 0px 0px 0px');
+    const startObserving = () => observed.forEach((el) =>
+      (el.hasAttribute('data-reveal-edge') ? edgeObserver : observer).observe(el));
     if (document.documentElement.classList.contains('intro-active')) {
       window.addEventListener('ms:intro-done', startObserving, { once: true });
     } else {
