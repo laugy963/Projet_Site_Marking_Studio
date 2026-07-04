@@ -43,6 +43,12 @@ Il n'y a aucune étape de build — le dossier racine est le dossier de déploie
 
 **SVG fleur :** L'ornement fleur-de-lis custom (chemin SVG inline dans chaque `.pilcrow`) est répété dans tout le HTML. Modifier le SVG nécessite un remplacement global.
 
+## Performance
+
+- `.htaccess` active gzip (mod_deflate) sur les ressources texte et le cache navigateur (mod_expires) : HTML 1 h, CSS/JS 1 mois, images 6 mois, fonts 1 an immutable. Le garder identique à la racine et dans `ovh-deploy/`.
+- Les images WebP sont encodées avec `cwebp -q 78 -m 6` (max 1600 px de large). Recompresser toute nouvelle photo avec ces réglages avant de l'ajouter.
+- `ovh-deploy/` ne contient que les fichiers réellement servis (pas les PNG logos sources non référencés dans `images/`).
+
 ## Schéma JSON-LD
 
 Le `<script type="application/ld+json">` dans `<head>` contient les tarifs des 3 forfaits (Série A 990€, Série B 2490€, Série C 4990€). Mettre à jour les prix ici en même temps que dans le HTML.
