@@ -310,6 +310,138 @@
     observed.forEach((el) => el.classList.add('is-visible'));
   }
 
+  /* ===== PAIN ITEM i. — « le visiteur qui part » =====
+     Mise en scène du bloc « Vos visiteurs partent en quelques secondes » :
+     quand la case entre dans le viewport, son contenu dérive lentement vers
+     la gauche pendant 3 s (.is-drifting) puis file hors du cadre d'un coup
+     (.is-gone) — comme le visiteur qu'il décrit. Le bouton plein-case révélé
+     ensuite le fait revenir ; une fois rattrapé, il reste en place tant
+     qu'on ne quitte pas la section (la sortie du viewport réarme tout,
+     cohérent avec les reveals bidirectionnels). Inactif sous
+     prefers-reduced-motion. */
+  const visitorItem = document.querySelector('.pain-item--visitor');
+  if (visitorItem && !reduceMotionPref && 'IntersectionObserver' in window) {
+    const returnBtn = visitorItem.querySelector('.pain-item__return');
+    let driftTimer = null;
+    let caught = false; // ramené d'un clic : ne repart plus tant qu'on reste là
+
+    const leave = () => {
+      visitorItem.classList.add('is-drifting');
+      driftTimer = setTimeout(() => {
+        driftTimer = null;
+        visitorItem.classList.remove('is-drifting');
+        visitorItem.classList.add('is-gone');
+        if (returnBtn) returnBtn.disabled = false;
+      }, 3000);
+    };
+
+    const bringBack = () => {
+      clearTimeout(driftTimer);
+      driftTimer = null;
+      visitorItem.classList.remove('is-drifting', 'is-gone');
+      if (returnBtn) returnBtn.disabled = true;
+    };
+
+    if (returnBtn) {
+      returnBtn.addEventListener('click', () => {
+        caught = true;
+        bringBack();
+      });
+    }
+
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const playing = driftTimer !== null || visitorItem.classList.contains('is-gone');
+          if (!caught && !playing) leave();
+        } else {
+          caught = false; // hors écran : on réarme pour la prochaine visite
+          bringBack();
+        }
+      });
+    }, { threshold: 0.4 }).observe(visitorItem);
+  }
+
+  /* ===== PAIN ITEM ii. — « introuvable sur Google » =====
+     Mise en scène du bloc « Vous n'apparaissez pas sur Google » : quand la
+     section se révèle, son contenu n'apparaît pas — il reste fantôme (flou
+     fort, quasi transparent), comme un site absent de l'index. Le clic sur
+     la case l'« indexe » : mise au point flou → net. La sortie du viewport
+     réarme le fantôme (cohérent avec le bloc i. et les reveals
+     bidirectionnels). L'état fantôme n'est posé que par JS : sans JS ou
+     sous prefers-reduced-motion, le bloc s'affiche normalement. */
+  const unindexedItem = document.querySelector('.pain-item--unindexed');
+  if (unindexedItem && !reduceMotionPref && 'IntersectionObserver' in window) {
+    const indexBtn = unindexedItem.querySelector('.pain-item__return');
+
+    const ghost = () => {
+      unindexedItem.classList.add('is-ghost');
+      if (indexBtn) indexBtn.disabled = false;
+    };
+    const index = () => {
+      unindexedItem.classList.remove('is-ghost');
+      if (indexBtn) indexBtn.disabled = true;
+    };
+
+    ghost();
+    if (indexBtn) indexBtn.addEventListener('click', index);
+
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) ghost(); // hors écran : réarmé
+      });
+    }, { threshold: 0.4 }).observe(unindexedItem);
+  }
+
+  /* ===== PAIN ITEM iii. — « vous ressemblez à tout le monde » =====
+     Mise en scène du bloc « Vous ressemblez à tout le monde » : à l'entrée
+     dans le viewport, le contenu se duplique en deux échos identiques qui
+     glissent derrière l'original (mêmes templates, mêmes blocs…). Le clic
+     sur la case le « démarque » : les clones se dispersent et l'original
+     marque le coup, seul. La sortie du viewport réarme (cohérent avec les
+     blocs i. et ii.). Les échos ne sont créés que par JS : sans JS ou sous
+     prefers-reduced-motion, le bloc s'affiche normalement. */
+  const clonedItem = document.querySelector('.pain-item--cloned');
+  if (clonedItem && !reduceMotionPref && 'IntersectionObserver' in window) {
+    const cloneSrc = clonedItem.querySelector('.pain-item__body');
+    const standOutBtn = clonedItem.querySelector('.pain-item__return');
+
+    // Deux échos décoratifs identiques, glissés derrière l'original
+    [1, 2].forEach((n) => {
+      const echo = cloneSrc.cloneNode(true);
+      echo.className = 'pain-item__clone pain-item__clone--' + n;
+      echo.setAttribute('aria-hidden', 'true');
+      clonedItem.insertBefore(echo, cloneSrc);
+    });
+
+    const arm = () => {
+      clonedItem.classList.remove('is-unique');
+      clonedItem.classList.add('is-cloned');
+      if (standOutBtn) standOutBtn.disabled = false;
+    };
+    const reset = () => {
+      clonedItem.classList.remove('is-cloned', 'is-unique');
+      if (standOutBtn) standOutBtn.disabled = true;
+    };
+
+    if (standOutBtn) {
+      standOutBtn.addEventListener('click', () => {
+        clonedItem.classList.add('is-unique');
+        standOutBtn.disabled = true;
+      });
+    }
+
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!clonedItem.classList.contains('is-unique')) arm();
+        } else {
+          reset(); // hors écran : réarmé pour la prochaine visite
+        }
+      });
+    }, { threshold: 0.4 }).observe(clonedItem);
+  }
+
   /* ===== MARKER HIGHLIGHTS ===== */
   const marks = document.querySelectorAll('.mark-hl');
   if (marks.length && 'IntersectionObserver' in window) {

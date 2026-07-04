@@ -103,7 +103,7 @@
 <header class="header" id="header">
   <div class="container header__inner">
     <a href="#hero" class="logo" aria-label="Marking Studio · Accueil">
-      <img class="logo__img" src="images/logo-markingstudio-dark.png" alt="Marking Studio" width="829" height="198">
+      <img class="logo__img" src="images/logo-markingstudio-dark@2x.png" alt="Marking Studio" width="301" height="72">
     </a>
 
     <nav class="nav" aria-label="Navigation principale">
@@ -248,17 +248,30 @@
     </div>
 
     <div class="pain__grid">
-      <article class="pain-item reveal">
-        <div class="pain-item__num">i.</div>
-        <h3>Vos visiteurs partent en quelques secondes.</h3>
-        <p>
-          Site lent, mobile cassé, hiérarchie confuse : chaque friction
-          renvoie vos prospects vers le concurrent juste en dessous
-          dans Google.
-        </p>
+      <!-- Item i. « visiteur qui part » — le contenu dérive vers la gauche puis
+           file hors du cadre après 3 s, comme le visiteur qu'il décrit ; un clic
+           sur la case le fait revenir (voir main.js). -->
+      <article class="pain-item pain-item--visitor reveal">
+        <div class="pain-item__body">
+          <div class="pain-item__num">i.</div>
+          <h3>Vos visiteurs partent en quelques secondes.</h3>
+          <p>
+            Site lent, mobile cassé, hiérarchie confuse : chaque friction
+            renvoie vos prospects vers le concurrent juste en dessous
+            dans Google.
+          </p>
+        </div>
+        <button class="pain-item__return" type="button" disabled>
+          <span class="pain-item__return-num" aria-hidden="true">i.</span>
+          <span><span class="em-italic">Parti chez le concurrent.</span><br>Cliquez pour le faire revenir.</span>
+        </button>
       </article>
 
-      <article class="pain-item reveal">
+      <!-- Item ii. « introuvable sur Google » — le contenu n'apparaît pas :
+           titre et texte restent fantômes (flou fort, quasi transparents),
+           comme un site absent de l'index ; un clic « indexe » le bloc et fait
+           la mise au point (voir main.js). -->
+      <article class="pain-item pain-item--unindexed reveal">
         <div class="pain-item__num">ii.</div>
         <h3>Vous n'apparaissez pas sur Google.</h3>
         <p>
@@ -266,16 +279,28 @@
           Vous payez de la publicité pour générer le trafic
           que votre site devrait déjà attirer.
         </p>
+        <button class="pain-item__return" type="button" disabled>
+          <span><span class="em-italic">Introuvable sur Google.</span><br>Cliquez pour l'indexer.</span>
+        </button>
       </article>
 
-      <article class="pain-item reveal">
-        <div class="pain-item__num">iii.</div>
-        <h3>Vous ressemblez à tout le monde.</h3>
-        <p>
-          Mêmes templates, mêmes blocs, mêmes photos.
-          Dans un marché saturé, l'identité visuelle n'est plus
-          un luxe : c'est ce qui fait qu'on vous choisit.
-        </p>
+      <!-- Item iii. « vous ressemblez à tout le monde » — le contenu se
+           duplique en échos identiques décalés derrière l'original (mêmes
+           templates, mêmes blocs…) ; un clic « démarque » le bloc et disperse
+           les clones (échos créés et pilotés par main.js). -->
+      <article class="pain-item pain-item--cloned reveal">
+        <div class="pain-item__body">
+          <div class="pain-item__num">iii.</div>
+          <h3>Vous ressemblez à tout le monde.</h3>
+          <p>
+            Mêmes templates, mêmes blocs, mêmes photos.
+            Dans un marché saturé, l'identité visuelle n'est plus
+            un luxe : c'est ce qui fait qu'on vous choisit.
+          </p>
+        </div>
+        <button class="pain-item__return" type="button" disabled>
+          <span class="em-italic">Cliquez pour vous démarquer.</span>
+        </button>
       </article>
     </div>
 
@@ -1144,7 +1169,7 @@
     <div class="footer__top">
       <div class="footer__brand reveal">
         <a href="#hero" class="logo" aria-label="Marking Studio · Accueil">
-          <img class="logo__img" src="images/logo-markingstudio-dark.png" alt="Marking Studio" width="829" height="198">
+          <img class="logo__img" src="images/logo-markingstudio-dark@2x.png" alt="Marking Studio" width="301" height="72">
         </a>
         <p>
           Création de sites internet sur mesure et originaux.

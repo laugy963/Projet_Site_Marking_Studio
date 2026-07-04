@@ -72,7 +72,7 @@
 
 /* Logo — "Marking · Studio" set in the same Didone as the card */
 .logo { display: inline-flex; align-items: baseline; gap: 0.35em; color: var(--text); }
-.logo__img { display: block; height: 30px; width: auto; }
+.logo__img { display: block; height: 36px; width: auto; }
 .logo__mark {
   font-family: var(--font-display);
   font-size: 1.5rem;
@@ -470,6 +470,159 @@
   color: var(--text-muted);
   line-height: 1.55;
 }
+
+/* Item i. « visiteur qui part » — mise en scène du texte qu'il porte :
+   le contenu dérive lentement vers la gauche (3 s, .is-drifting) puis file
+   hors du cadre d'un coup (.is-gone), comme un visiteur qui abandonne la
+   page. Le bouton plein-case, révélé une fois le bloc parti, le fait
+   revenir. Classes posées par main.js ; jamais sous prefers-reduced-motion. */
+.pain-item--visitor {
+  position: relative;
+  overflow: hidden;
+}
+.pain-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: transform 600ms var(--ease), opacity 600ms var(--ease), filter 600ms var(--ease);
+}
+.pain-item--visitor.is-drifting .pain-item__body {
+  transform: translateX(-22px);
+  transition: transform 3000ms cubic-bezier(0.4, 0, 0.7, 1);
+}
+.pain-item--visitor.is-gone .pain-item__body {
+  transform: translateX(-140%);
+  opacity: 0;
+  filter: blur(5px);
+  transition:
+    transform 420ms cubic-bezier(0.6, -0.05, 0.9, 0.4),
+    opacity 320ms ease-out 80ms,
+    filter 420ms ease-in;
+}
+.pain-item__return {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  padding: var(--space-10) var(--space-6) var(--space-8);
+  background: none;
+  border: 0;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-faint);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms var(--ease), color 200ms var(--ease);
+}
+.pain-item__return-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-faint);
+}
+.pain-item__return .em-italic { color: var(--accent); }
+.pain-item--visitor.is-gone .pain-item__return,
+.pain-item--unindexed.is-ghost .pain-item__return,
+.pain-item--cloned.is-cloned:not(.is-unique) .pain-item__return {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  transition-delay: 350ms;
+}
+.pain-item--visitor.is-gone .pain-item__return:hover,
+.pain-item--visitor.is-gone .pain-item__return:focus-visible,
+.pain-item--unindexed.is-ghost .pain-item__return:hover,
+.pain-item--unindexed.is-ghost .pain-item__return:focus-visible,
+.pain-item--cloned.is-cloned:not(.is-unique) .pain-item__return:hover,
+.pain-item--cloned.is-cloned:not(.is-unique) .pain-item__return:focus-visible {
+  color: var(--text-muted);
+}
+
+/* Item ii. « introuvable sur Google » — le contenu n'apparaît pas : h3 + p
+   restent fantômes (flou fort, quasi transparents), comme un site absent de
+   l'index — seul le numéro ii. reste net, le « slot » existe dans la grille.
+   Le clic « indexe » le bloc : mise au point flou → net. Classe .is-ghost
+   posée par main.js ; jamais sans JS ni sous prefers-reduced-motion. */
+.pain-item--unindexed { position: relative; }
+.pain-item--unindexed h3,
+.pain-item--unindexed p {
+  transition: filter 900ms var(--ease), opacity 900ms var(--ease);
+}
+.pain-item--unindexed.is-ghost h3,
+.pain-item--unindexed.is-ghost p {
+  filter: blur(9px);
+  opacity: 0.18;
+}
+/* Le fantôme se lit d'abord, l'invitation ensuite. */
+.pain-item--unindexed.is-ghost .pain-item__return { transition-delay: 900ms; }
+
+/* Item iii. « vous ressemblez à tout le monde » — le contenu se duplique en
+   deux échos identiques décalés derrière l'original (mêmes templates, mêmes
+   blocs, mêmes photos). Le clic « démarque » le bloc : les clones se
+   dispersent d'un coup et l'original marque le coup, seul. Les échos sont
+   créés par main.js (aria-hidden) ; jamais sans JS ni sous
+   prefers-reduced-motion. */
+.pain-item--cloned {
+  position: relative;
+  overflow: hidden;
+}
+.pain-item--cloned .pain-item__body {
+  position: relative;
+  z-index: 1;
+}
+.pain-item__clone {
+  position: absolute;
+  inset: 0;
+  padding: inherit; /* suit le padding de la case à tous les breakpoints */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  opacity: 0;
+  transform: translate(0, 0);
+  pointer-events: none;
+  transition: transform 700ms var(--ease), opacity 700ms var(--ease);
+}
+.pain-item--cloned.is-cloned .pain-item__clone--1 {
+  transform: translate(12px, 14px);
+  opacity: 0.26;
+  transition-delay: 500ms;
+}
+.pain-item--cloned.is-cloned .pain-item__clone--2 {
+  transform: translate(24px, 28px);
+  opacity: 0.12;
+  transition-delay: 640ms;
+}
+/* Démarqué : les clones filent en diagonale et disparaissent, vite. */
+.pain-item--cloned.is-unique .pain-item__clone--1 {
+  transform: translate(80px, 90px);
+  opacity: 0;
+  transition: transform 450ms cubic-bezier(0.6, -0.05, 0.9, 0.4), opacity 360ms ease-out;
+}
+.pain-item--cloned.is-unique .pain-item__clone--2 {
+  transform: translate(150px, 170px);
+  opacity: 0;
+  transition: transform 450ms cubic-bezier(0.6, -0.05, 0.9, 0.4), opacity 360ms ease-out;
+}
+@keyframes pain-standout {
+  50% { transform: scale(1.03); }
+}
+.pain-item--cloned.is-unique .pain-item__body {
+  animation: pain-standout 500ms var(--ease);
+}
+/* Hint sur une ligne, en haut à droite (la bande du numéro iii., seule zone
+   libre à tous les breakpoints) ; il attend que les échos soient sortis. */
+.pain-item--cloned .pain-item__return {
+  justify-content: flex-start;
+  align-items: flex-end;
+  text-align: right;
+  z-index: 2;
+}
+.pain-item--cloned.is-cloned:not(.is-unique) .pain-item__return { transition-delay: 1300ms; }
 
 @media (max-width: 880px) {
   .pain__title-block { grid-template-columns: 1fr; gap: var(--space-6); }
@@ -1554,7 +1707,7 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
   /* Header — compact */
   .header__inner { min-height: 64px; padding-block: 10px; }
   .logo__mark, .logo__mark-italic, .logo__dot { font-size: 1.25rem; }
-  .logo__img { height: 26px; }
+  .logo__img { height: 30px; }
 
   /* Mobile menu */
   .mobile-menu { top: 64px; }
