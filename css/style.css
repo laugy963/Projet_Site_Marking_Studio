@@ -1063,22 +1063,14 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
   color: var(--paper);
   border-top: 3px solid var(--accent);
 }
-/* On the light featured card, keep the CTA a high-contrast dark pill (orange text
-   on ivory wouldn't hit AA); hover feedback still comes from the inner line + lift. */
-.price-card--featured .btn--accent,
-.price-card--featured .btn--accent:hover {
-  --btn-bg: #16181C; --btn-fg: #F6F4EC; --btn-bd: #16181C;
-}
 .price-card--featured .price-card__name,
-.price-card--featured .price-card__amount,
 .price-card--featured .price-card__sub,
 .price-card--featured .price-card__features li { color: var(--paper); }
-.price-card--featured .price-card__amount .em-italic { color: var(--accent); }
 .price-card--featured .price-card__features li::before { color: var(--accent); }
-.price-card--featured .price-card__features li { border-bottom-color: rgba(17,19,22,0.12); }
+.price-card--featured .price-card__features,
+.price-card--featured .price-card__features li { border-color: rgba(17,19,22,0.12); }
 .price-card--featured .price-card__desc { color: rgba(17,19,22,0.62); }
 .price-card--featured .price-card__top-label { color: rgba(17,19,22,0.55); }
-.price-card--featured .price-card__hint { color: rgba(17,19,22,0.62); }
 
 .price-card__top {
   display: flex; justify-content: space-between; align-items: center;
@@ -1113,39 +1105,16 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
   font-size: 0.95rem;
   color: var(--text-muted);
   line-height: 1.45;
-  /* Reserve room for the longest blurb so the price + feature lists
+  /* Reserve room for the longest blurb so the feature lists
      start at the same Y across all three cards */
   min-height: 4.5em;
 }
 
-/* No published prices: the slot reads "Sur devis" + a quote promise */
-.price-card__price {
-  display: flex; flex-direction: column; align-items: flex-start;
-  gap: var(--space-2);
-  border-block: 1px solid var(--rule);
-  padding-block: var(--space-5);
-  margin-block: var(--space-3);
-}
-.price-card--featured .price-card__price { border-color: rgba(17,19,22,0.14); }
-.price-card__amount {
-  font-family: var(--font-display);
-  /* Sized so "Sur devis" stays on one line down to the 3-column breakpoint */
-  font-size: clamp(2.1rem, 1.6rem + 1.3vw, 2.9rem);
-  line-height: 1;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-}
-.price-card__hint {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  letter-spacing: var(--track-mini);
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
+/* No price or per-card CTA: the ruled feature list closes each card */
 .price-card__features {
   display: flex; flex-direction: column;
   flex: 1;
+  border-top: 1px solid var(--rule);
 }
 .price-card__features li {
   font-size: 0.9rem;
@@ -1163,8 +1132,6 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
   color: var(--accent);
   flex-shrink: 0;
 }
-
-.price-card .btn { margin-top: auto; }
 
 .pricing__note {
   margin-top: var(--space-8);
@@ -1798,7 +1765,6 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
   }
   .price-card:last-child { border-bottom: 0; }
   .price-card__name { font-size: 1.6rem; }
-  .price-card__amount { font-size: 2.4rem; }
   .price-card__desc { font-size: 0.9rem; min-height: 0; }
   .price-card__features li { font-size: 0.88rem; }
 
@@ -1860,7 +1826,6 @@ html:not(.js) .work-row::after { transform: scaleX(1); }
   .marquee__inner { gap: var(--space-6); }
 
   .price-card { padding: var(--space-5) var(--space-4); }
-  .price-card__amount { font-size: 2.1rem; }
 
   .footer__top { grid-template-columns: 1fr; }
   .footer__brand { grid-column: auto; }

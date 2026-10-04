@@ -89,7 +89,7 @@ Reveal au scroll **bidirectionnel** (façon Wibify) : `.reveal` part de `opacity
 | `.btn--accent` | Orange fond, texte foncé — CTA principal |
 | `.btn--ghost` | Transparent, bordure rule → hover ink |
 
-Sur la carte tarif « featured » (ivoire), le bouton est forcé en **pill sombre** (charcoal + texte ivoire) : orange sur ivoire ne passe pas AA en texte.
+Les cartes d'offres n'ont pas de bouton propre : un seul CTA `.btn--accent` « Démarrer un projet » sous la grille. Si un bouton devait revenir sur la carte « featured » (ivoire), le forcer en **pill sombre** (charcoal + texte ivoire) : orange sur ivoire ne passe pas AA en texte.
 
 ### Navigation
 - Header fixé, fond `--paper`, `z-index: 100`

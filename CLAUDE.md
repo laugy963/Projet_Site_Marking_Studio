@@ -32,7 +32,7 @@ Il n'y a aucune étape de build — le dossier racine est le dossier de déploie
 
 **Tokens de couleur clés :**
 - `--paper` (fond sombre) / `--ink` (ivoire de contraste) — inversés recto ↔ verso
-- `--accent` — orange `#FF6D14` (recto + verso) ; variante foncée `#C2560E` scopée sur la carte tarif ivoire et les maquettes claires. Texte sur orange = foncé (`--text-inverse`). Le bouton de la carte tarif « featured » est forcé en pill sombre (orange sur ivoire ne passe pas AA)
+- `--accent` — orange `#FF6D14` (recto + verso) ; variante foncée `#C2560E` scopée sur la carte tarif ivoire et les maquettes claires. Texte sur orange = foncé (`--text-inverse`). Orange sur ivoire ne passe pas AA en petit texte : ne pas y poser de bouton orange
 - `--text-muted`, `--text-faint`, `--rule` — tons secondaires sur charcoal (calibrés AA)
 
 **Typographie :** Bricolage Grotesque (grotesk caractériel, titres, `.em-italic` et numéraux — l'italique est un oblique synthétisé) + Inter (UI, labels, corps). Auto-hébergées en woff2 (`assets/fonts/`, pas de CDN Google, RGPD + perf). Le contraste repose sur l'alternance Bricolage Grotesque display / accents orange obliques vs Inter texte courant.
@@ -51,7 +51,7 @@ Il n'y a aucune étape de build — le dossier racine est le dossier de déploie
 
 ## Prix : tout passe par le devis
 
-**Aucun montant de prestation n'est publié**, par choix commercial : chaque visiteur est amené à demander un devis. Les cartes de la section `#pricing` (libellée « Nos offres », lien de nav « Offres ») affichent « Sur devis · Gratuit · réponse sous 24h ». La FAQ ne donne aucun chiffre et répond à « Combien coûte un site internet ? » par le devis. Le `<script type="application/ld+json">` du `<head>` liste les 3 séries (Essentiel, Sur mesure, Atelier) **sans `price`** ; seul `priceRange: "€€"` reste. Ne réintroduire de montant ni dans le HTML, ni dans le JSON-LD, ni dans la FAQ. Seule exception : les fourchettes « Budget estimé » du formulaire, qui correspondent au budget du client.
+**Aucun montant de prestation n'est publié**, par choix commercial : chaque visiteur est amené à demander un devis. Les cartes de la section `#pricing` (libellée « Nos offres », lien de nav « Offres ») ne montrent ni prix, ni mention « Sur devis », ni bouton : nom, description et liste des prestations seulement, pour éviter la répétition. Le devis est porté par le chapeau, la note sous les cartes et un seul bouton « Démarrer un projet » vers `#contact`. La FAQ ne donne aucun chiffre et répond à « Combien coûte un site internet ? » par le devis. Le `<script type="application/ld+json">` du `<head>` liste les 3 séries (Essentiel, Sur mesure, Atelier) **sans `price`** ; seul `priceRange: "€€"` reste. Ne réintroduire de montant ni dans le HTML, ni dans le JSON-LD, ni dans la FAQ. Seule exception : les fourchettes « Budget estimé » du formulaire, qui correspondent au budget du client.
 
 ## SEO
 
