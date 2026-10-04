@@ -16,9 +16,9 @@ Contexte d'usage : le visiteur arrive souvent peu au fait du web, parfois frustr
 
 ## Product Purpose
 
-Site vitrine one-page de **Marking Studio**, studio indépendant français de création de sites sur mesure. Le site est lui-même la **preuve de la promesse** : sa qualité éditoriale, sa vitesse et son soin du détail démontrent ce que le studio sait faire. Il présente le positionnement (« un seul projet à la fois »), le process en quatre étapes, des démonstrations de directions artistiques, trois forfaits transparents (Série A 990€, Série B 2490€, Série C 4990€) et un formulaire de contact.
+Site vitrine one-page de **Marking Studio**, studio indépendant français de création de sites sur mesure. Le site est lui-même la **preuve de la promesse** : sa qualité éditoriale, sa vitesse et son soin du détail démontrent ce que le studio sait faire. Il présente le positionnement (« un seul projet à la fois »), le process en quatre étapes, des démonstrations de directions artistiques, trois séries d'offres (Essentiel, Sur mesure, Atelier) **sans prix affichés** — chaque projet passe par un devis personnalisé, gratuit, sous 24h — et un formulaire de demande de devis.
 
-Succès = le visiteur passe du « mon site ne me ressemble plus » à « je veux travailler avec eux » et envoie une demande de projet qualifiée, en confiance sur le sérieux et le prix.
+Succès = le visiteur passe du « mon site ne me ressemble plus » à « je veux travailler avec eux » et envoie une demande de devis qualifiée, en confiance sur le sérieux et la transparence du devis.
 
 ## Brand Personality
 
@@ -42,7 +42,7 @@ Le studio se vend précisément sur le fait de ne **pas** « ressembler à tout 
 1. **Le site est la démonstration.** Practice what you preach : chaque détail (vitesse, typographie, rythme) doit prouver le niveau que le studio vend. Aucun défaut « acceptable ».
 2. **Distinction avant conformité.** Si un choix pourrait apparaître sur n'importe quel template, le rejeter. L'identité recto/verso et l'accent orange unique sont la signature — les défendre.
 3. **Montrer, pas promettre.** Démonstrations de directions artistiques et refonte « glissez pour voir » plutôt que des adjectifs. La preuve par l'exemple.
-4. **Clarté sans jargon.** Process, prix et FAQ limpides pour un public non technique ; rassurer sans infantiliser. Aucun forfait piégé, tout est dit.
+4. **Clarté sans jargon.** Process, devis et FAQ limpides pour un public non technique ; rassurer sans infantiliser. Pas de prix affiché, mais un devis détaillé, sans surprise.
 5. **Studio à taille humaine.** « Un seul projet à la fois », signature à chaque livraison : la relation directe et l'exclusivité sont un argument, pas un slogan — les rendre tangibles.
 
 ## Accessibility & Inclusion
